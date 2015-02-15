@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Forestest
+        psr4_prefix: Forestest
+        src_path: app

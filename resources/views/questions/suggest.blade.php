@@ -38,15 +38,15 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Programming language</label>
-							<select class="form-control">
-								<option value="one">Java</option>
-								<option value="two">Javascript</option>
-								<option value="three">Ruby</option>
-								<option value="three">Python</option>
-								<option value="three">Perl</option>
-								<option value="three">PHP</option>
-								<option value="three">C#</option>
-								<option value="three">C++</option>
+							<select class="form-control" id="question-program-lang">
+								<option value="java">Java</option>
+								<option value="javascript">Javascript</option>
+								<option value="ruby">Ruby</option>
+								<option value="python">Python</option>
+								<option value="perl">Perl</option>
+								<option value="php">PHP</option>
+								<option value="cs">C#</option>
+								<option value="cpp">C++</option>
 							</select>
 						</div>
 					</div>

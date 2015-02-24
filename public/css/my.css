@@ -1,14 +1,10 @@
-.CodeMirror pre {
-    line-height: 14px;
+.CodeMirror {
+    height: auto;
 }
 #editor-input {
     position: relative;
     overflow: auto;
     font-size: 12px;
-}
-.CodeMirror-scroll {
-    height: 100%;
-    min-height: 100%;
 }
 #editor-preview {
     position: relative;
@@ -20,17 +16,6 @@
     font-size: 16px;
     line-height: 1.5em
 }
-
-@media screen and (max-width: 1024px) {
-#editor-input {
-    display: none;
-}
-#editor-preview {
-    left: 0;
-    padding-left: 10px;
-}
-}
-
 .editor-panel .panel-body {
     padding: 0;
     margin: 0;

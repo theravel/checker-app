@@ -7,14 +7,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Suggest a question</div>
 				<div class="panel-body">
-					
-					<script src="/js/markdown-editor/marked.js"></script>
+
 					<script src="/js/markdown-editor/highlight.pack.js"></script>
-					<script src="/js/markdown-editor/codemirror.js"></script>
-					<script src="/js/markdown-editor/xml.js"></script>
-					<script src="/js/markdown-editor/markdown.js"></script>
-					<script src="/js/markdown-editor/gfm.js"></script>
-					<script src="/js/markdown-editor/javascript.js"></script>
 					<script src="/js/markdown-editor/rawinflate.js"></script>
 					<script src="/js/markdown-editor/rawdeflate.js"></script>
 					<link rel="stylesheet" href="/css/markdown-editor/codemirror.css">

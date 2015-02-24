@@ -1,6 +1,9 @@
 define([
-    'jquery'
-], function($) {
+	'jquery',
+	'marked',
+	'lib/codemirror-5.0/lib/codemirror',
+	'lib/codemirror-5.0/mode/gfm/gfm',
+], function($, marked, CodeMirror) {
 
 	var MarkdownEditor = function() {
 

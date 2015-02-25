@@ -8,9 +8,10 @@
 
 	<link href="/css/app.css" rel="stylesheet">
 	<link href="/css/main.css" rel="stylesheet">
-	<link href="/js/lib/codemirror-5.0/lib/codemirror.css" rel="stylesheet" >
-	<link href="/js/lib/highlight-8.4/styles/default.css" rel="stylesheet" >
-	<link href="/css/components/markdown-editor.css" rel="stylesheet" >
+	<link href="/vendor/components/codemirror-5.0/lib/codemirror.css" rel="stylesheet" >
+	<link href="/vendor/components/highlight-8.4/styles/default.css" rel="stylesheet" >
+	<link href="/components/markdown-editor/markdown-editor.css" rel="stylesheet" >
+	<link href="/components/markdown-view/markdown-view.css" rel="stylesheet" >
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -60,7 +61,7 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="/js/lib/require-2.1.16.min.js"></script>
+	<script src="/vendor/js/require-2.1.16.min.js"></script>
 	<script src="/js/main.js"></script>
 	<script src="/js/views/questions/suggest.js"></script>
 </body>

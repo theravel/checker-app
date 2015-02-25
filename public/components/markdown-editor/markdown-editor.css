@@ -6,16 +6,6 @@
     overflow: auto;
     font-size: 12px;
 }
-#editor-preview {
-    position: relative;
-    overflow: auto;
-    padding: 10px;
-    padding-left: 20px;
-    color: #444;
-    font-family: Georgia, Palatino, 'Palatino Linotype', Times, 'Times New Roman', serif;
-    font-size: 16px;
-    line-height: 1.5em
-}
 .editor-panel .panel-body {
     padding: 0;
     margin: 0;

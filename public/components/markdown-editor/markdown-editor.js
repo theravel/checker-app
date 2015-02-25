@@ -1,22 +1,19 @@
 define([
 	'jquery',
-	'marked',
-	'lib/highlight-8.4/highlight.pack',
-	'lib/codemirror-5.0/lib/codemirror',
-	'lib/codemirror-5.0/mode/gfm/gfm',
-], function($, marked, hljs, CodeMirror) {
+	'vendor/components/codemirror-5.0/lib/codemirror',
+	'vendor/components/codemirror-5.0/mode/gfm/gfm',
+], function($, CodeMirror) {
 
-	var MarkdownEditor = function() {
+	var MarkdownEditor = function(markdownView) {
 
 		var jEditorArea = $('#editor-area'),
 			jInput = $('#editor-input'),
-			jPreview = $('#editor-preview'),
+			jPreview = $('#markdown-view'),
 			jPreviewBtn = $('#editor-preview-btn'),
 			jEditBtn = $('#editor-edit-btn'),
 			jEnableFullscreenBtn = $('#enable-fullscreen-btn'),
 			jExitFullscreenBtn = $('#exit-fullscreen-btn'),
 			editorArea = jEditorArea.get(0),
-			defaultLanguage,
 
 			editor = CodeMirror.fromTextArea($('#code').get(0), {
 				mode: 'gfm',
@@ -26,10 +23,6 @@ define([
 				theme: 'default',
 				indentUnit: 4
 			}),
-			languageAliases = {
-				js: 'javascript',
-				html: 'xml'
-			},
 
 			enableFullScreen = function(element) {
 				if (element.requestFullScreen) {
@@ -63,37 +56,13 @@ define([
 				exitFullScreen();
 			},
 
-			setOutput = function(val) {
-				var equation = val.replace(/<equation>((.*?\n)*?.*?)<\/equation>/ig, function(a, b){
-					return '<img src="http://latex.codecogs.comp/ng.latex?' + encodeURIComponent(b) + '" />';
-				});
-				jPreview.html(marked(equation));
-			},
-
-			setDefaultLanguage = function(lang) {
-				defaultLanguage = lang;
-				setOutput(editor.getValue());
+			updateView = function() {
+				markdownView.setValue(editor.getValue());
 			}
-			;
-
-		marked.setOptions({
-			highlight: function(code, lang){
-				if (!lang) {
-					lang = defaultLanguage;
-				}
-				if (languageAliases[lang]) {
-					lang = languageAliases[lang];
-				}
-				var languages = hljs.listLanguages(),
-					index = languages.indexOf(lang);
-				return (index >= 0) ?
-					hljs.highlight(lang, code).value :
-					code;
-			}
-		});
+		;
 
 		jPreviewBtn.on('click', function() {
-			setOutput(editor.getValue());
+			updateView();
 			$([jInput, jPreview, jPreviewBtn, jEditBtn]).toggleClass('hidden');
 		});
 
@@ -109,9 +78,9 @@ define([
 
 		jExitFullscreenBtn.add('#editor-help-btn').on('click', triggerFullscreenExit);
 
-		this.setDefaultLanguage = setDefaultLanguage;
+		this.updateView = updateView;
 	}
 
-	return new MarkdownEditor();
+	return MarkdownEditor;
 
 });

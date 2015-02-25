@@ -82,7 +82,7 @@ function test($arg = 42) use ($obj) {
 									syntax, do not forget specifying programming language for code highlighting.
 								</div>
 						</div>
-						<div id="editor-preview" class="hidden">
+						<div id="markdown-view" class="hidden">
 						</div>
 					</div>
 				</div>

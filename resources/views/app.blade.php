@@ -56,7 +56,7 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="/js/lib/require.min.js"></script>
+	<script src="/js/lib/require-2.1.16.min.js"></script>
 	<script src="/js/main.js"></script>
 </body>
 </html>

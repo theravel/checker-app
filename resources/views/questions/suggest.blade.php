@@ -9,12 +9,9 @@
 				<div class="panel-body">
 
 					<script src="/js/markdown-editor/highlight.pack.js"></script>
-					<script src="/js/markdown-editor/rawinflate.js"></script>
-					<script src="/js/markdown-editor/rawdeflate.js"></script>
-					<link rel="stylesheet" href="/css/markdown-editor/codemirror.css">
+					<link rel="stylesheet" href="/js/lib/codemirror-5.0/lib/codemirror.css">
 					<link rel="stylesheet" href="/css/markdown-editor/default.css">
 					<link rel="stylesheet" href="/css/my.css">
-					<?php /* https://github.com/jbt/markdown-editor */ ?>
 
 				<div class="row">
 					<div class="col-lg-6">

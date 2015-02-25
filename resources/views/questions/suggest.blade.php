@@ -86,6 +86,15 @@ function test($arg = 42) use ($obj) {
 						</div>
 					</div>
 				</div>
+
+				<div class="form-group">
+					<label>Categories</label>					
+					<ul id="question-categories">
+						<li>Tag1</li>
+						<li>Tag2</li>
+					</ul>
+				</div>
+
 			</div>
 		</div>
 	</div>

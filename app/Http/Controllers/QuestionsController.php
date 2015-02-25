@@ -1,5 +1,7 @@
 <?php namespace Forestest\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class QuestionsController extends Controller {
 
 	/*
@@ -26,6 +28,8 @@ class QuestionsController extends Controller {
 			->share('pageCss', [
 				'/vendor/components/codemirror-5.0/lib/codemirror.css',
 				'/vendor/components/highlight-8.4/styles/default.css',
+				'/vendor/components/jquery-ui-1.11.3/jquery-ui.min.css',
+				'/vendor/components/tagit-2.0/jquery.tagit.css',
 				'/components/markdown-editor/markdown-editor.css',
 				'/components/markdown-view/markdown-view.css',
 			]);
@@ -41,6 +45,34 @@ class QuestionsController extends Controller {
 	public function getSuggest()
 	{
 		return view('questions/suggest');
+	}
+
+	/**
+	 * Show the application dashboard to the user.
+	 *
+	 * @return Response
+	 */
+	public function getCategories(Request $request)
+	{
+		$language = $request->get('language');
+		if ('php' === $language) {
+			$categories = [
+				['name' => 'LAMP', 'id' => 1],
+				['name' => 'Apache', 'id' => 23],
+				['name' => 'Nginx', 'id' => 22],
+				['name' => 'None', 'id' => 4],
+				['name' => 'NoSQL', 'id' => 7],
+			];
+		} else {
+			$categories = [
+				['name' => 'Math', 'id' => 8],
+				['name' => 'Patterns', 'id' => 9],
+				['name' => 'Programming', 'id' => 11],
+				['name' => 'Perl', 'id' => 22],
+				['name' => 'Other', 'id' => 6],
+			];
+		}
+		return response()->json($categories);
 	}
 
 }

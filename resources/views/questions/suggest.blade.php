@@ -9,9 +9,6 @@
 				<div class="panel-body">
 
 					<script src="/js/markdown-editor/highlight.pack.js"></script>
-					<link rel="stylesheet" href="/js/lib/codemirror-5.0/lib/codemirror.css">
-					<link rel="stylesheet" href="/css/markdown-editor/default.css">
-					<link rel="stylesheet" href="/css/my.css">
 
 				<div class="row">
 					<div class="col-lg-6">

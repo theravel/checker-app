@@ -2,28 +2,16 @@
 
 require.config({
 	baseUrl: "/js",
-    paths: {
-        jquery: 'lib/jquery-2.1.3.min',
+	paths: {
+		jquery: 'lib/jquery-2.1.3.min',
 		bootstrap: 'lib/bootstrap-3.3.2.min',
 		marked: 'lib/marked-0.3.3.min',
     },
 	shim: {
-        bootstrap: {
-            deps: ['jquery']
-        }
+		bootstrap: {
+			deps: ['jquery']
+		}
 	}
 });
 
 require(['bootstrap']);
-
-require([
-	'jquery',
-	'components/markdown-editor'
-], function($, editor) {
-
-	$('#question-program-lang').on('change', function() {
-		var language = $(this).val();
-		editor.setDefaultLanguage(language);
-	});
-
-})

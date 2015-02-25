@@ -8,8 +8,6 @@
 				<div class="panel-heading">Suggest a question</div>
 				<div class="panel-body">
 
-					<script src="/js/markdown-editor/highlight.pack.js"></script>
-
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="form-group">

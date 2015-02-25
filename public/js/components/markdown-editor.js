@@ -1,9 +1,10 @@
 define([
 	'jquery',
 	'marked',
+	'lib/highlight-8.4/highlight.pack',
 	'lib/codemirror-5.0/lib/codemirror',
 	'lib/codemirror-5.0/mode/gfm/gfm',
-], function($, marked, CodeMirror) {
+], function($, marked, hljs, CodeMirror) {
 
 	var MarkdownEditor = function() {
 
@@ -25,7 +26,7 @@ define([
 				theme: 'default',
 				indentUnit: 4
 			}),
-			languageOverrides = {
+			languageAliases = {
 				js: 'javascript',
 				html: 'xml'
 			},
@@ -80,10 +81,12 @@ define([
 				if (!lang) {
 					lang = defaultLanguage;
 				}
-				if (languageOverrides[lang]) {
-					lang = languageOverrides[lang];
+				if (languageAliases[lang]) {
+					lang = languageAliases[lang];
 				}
-				return hljs.LANGUAGES[lang] ?
+				var languages = hljs.listLanguages(),
+					index = languages.indexOf(lang);
+				return (index >= 0) ?
 					hljs.highlight(lang, code).value :
 					code;
 			}

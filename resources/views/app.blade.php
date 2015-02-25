@@ -9,7 +9,7 @@
 	<link href="/css/app.css" rel="stylesheet">
 	<link href="/css/main.css" rel="stylesheet">
 	<link href="/js/lib/codemirror-5.0/lib/codemirror.css" rel="stylesheet" >
-	<link href="/css/markdown-editor/default.css" rel="stylesheet" >
+	<link href="/js/lib/highlight-8.4/styles/default.css" rel="stylesheet" >
 	<link href="/css/components/markdown-editor.css" rel="stylesheet" >
 
 	<!-- Fonts -->

@@ -4,13 +4,13 @@ require([
 	'components/markdown-view/markdown-view',
 ], function($, MarkdownEditor, MarkdownView) {
 
-	var view = new MarkdownView(),
-		editor = new MarkdownEditor(view)
+	var preview = new MarkdownView(),
+		editor = new MarkdownEditor(preview)
 	;
 
 	$('#question-program-lang').on('change', function() {
 		var language = $(this).val();
-		view.setDefaultLanguage(language);
+		preview.setDefaultLanguage(language);
 		editor.updateView();
 	});
 

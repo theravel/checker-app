@@ -1,6 +1,6 @@
 define([
-	'marked',
-	'highlight',
+	'vendor/js/marked-0.3.3.min',
+	'vendor/components/highlight-8.4/highlight.pack',
 ], function(marked, hljs) {
 
 	var MarkdownView = function() {

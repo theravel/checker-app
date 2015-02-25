@@ -1,6 +1,9 @@
 .CodeMirror {
     height: auto;
 }
+.CodeMirror-scroll {
+    height: auto;
+}
 #editor-input {
     position: relative;
     overflow: auto;

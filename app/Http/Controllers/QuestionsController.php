@@ -20,7 +20,17 @@ class QuestionsController extends Controller {
 	 */
 	public function __construct()
 	{
-		//$this->middleware('auth');
+		$uri = static::getRouter()->getCurrentRoute()->getUri();
+		list($controller, $action) = explode('/', $uri);
+		app('Illuminate\Contracts\View\Factory')
+			->share('pageCss', [
+				'/vendor/components/codemirror-5.0/lib/codemirror.css',
+				'/vendor/components/highlight-8.4/styles/default.css',
+				'/components/markdown-editor/markdown-editor.css',
+				'/components/markdown-view/markdown-view.css',
+			]);
+		app('Illuminate\Contracts\View\Factory')
+			->share('pageJs', "$controller/$action");
 	}
 
 	/**

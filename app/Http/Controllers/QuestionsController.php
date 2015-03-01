@@ -57,19 +57,19 @@ class QuestionsController extends Controller {
 		$language = $request->get('language');
 		if ('php' === $language) {
 			$categories = [
-				['name' => 'LAMP', 'id' => 1],
-				['name' => 'Apache', 'id' => 23],
-				['name' => 'Nginx', 'id' => 22],
-				['name' => 'None', 'id' => 4],
-				['name' => 'NoSQL', 'id' => 7],
+				'LAMP',
+				'Apache',
+				'Nginx',
+				'None',
+				'NoSQL',
 			];
 		} else {
 			$categories = [
-				['name' => 'Math', 'id' => 8],
-				['name' => 'Patterns', 'id' => 9],
-				['name' => 'Programming', 'id' => 11],
-				['name' => 'Perl', 'id' => 22],
-				['name' => 'Other', 'id' => 6],
+				'Math',
+				'Patterns',
+				'Programming',
+				'Perl',
+				'Other',
 			];
 		}
 		return response()->json($categories);

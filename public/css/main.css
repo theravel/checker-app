@@ -4,3 +4,44 @@
 .clear {
     clear: both;
 }
+
+.question-categories .ui-widget-content.tagit-choice {
+    border-color: #337ab7;
+}
+.question-categories .ui-widget-content.tagit-choice .tagit-close {
+    color: #fff;
+}
+.answer-wrapper {
+    margin-top: 10px;
+}
+.add-answer {
+    margin-bottom: 10px;
+}
+.flag-correct-hint {
+    padding: 6px;
+}
+.answer-template {
+    display: none;
+}
+.answer-correct-toggle,
+.answer-correct-toggle label {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.answer-correct-toggle label {
+    margin: 0;
+}
+.answer-correct-toggle input {
+    display: none;
+}
+.answer-correct-ok {
+    color: #080;
+}
+.answer-correct-wrong {
+    color: #f00;
+}

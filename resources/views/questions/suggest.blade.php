@@ -12,11 +12,11 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Answer type</label>
-							<select class="form-control">
-								<option value="one">Single line text</option>
-								<option value="two">Multi-line text</option>
-								<option value="three">Pick one</option>
-								<option value="four">Check all that apply</option>
+							<select class="form-control" id="question-type">
+								<option value="1">Single line text</option>
+								<option value="2">Multi-line text</option>
+								<option value="3" selected="selected">Pick one</option>
+								<option value="4">Check all that apply</option>
 							</select>
 						</div>
 					</div>
@@ -36,6 +36,14 @@
 							</select>
 						</div>
 					</div>
+				</div>
+
+				<div class="form-group question-categories">
+					<label>Categories</label>
+					<span class="hidden" id="t-categories-placeholder">Your categories</span>
+					<ul id="question-categories">
+						<li>Common</li>
+					</ul>
 				</div>
 
 				<div class="panel panel-default editor-panel" id="editor-area">
@@ -59,27 +67,17 @@
 					<div class="panel-body">
 						<div id="editor-input">
 <textarea id="code">
-# GitHub Flavored Markdown Editor
-Usage samples:
+Code example:
 
-- list item
-- **bold item**
+	function test(arg) {
+		console.log(arg, 42, 'string');
+	}
 
-```javascript
-function test(arg) {
-	console.log(arg, 42, 'string');
-}
-```
-
-```php
-function test($arg = 42) use ($obj) {
-	$obj->call($arg, 'string');
-}
-```
+Question text...
 </textarea>
-								<div class="editor-hints p">
+								<div class="editor-hints">
 									Use <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> 
-									syntax, do not forget specifying programming language for code highlighting.
+									syntax and indent source code for highlighting
 								</div>
 						</div>
 						<div id="markdown-view" class="hidden">
@@ -87,12 +85,29 @@ function test($arg = 42) use ($obj) {
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label>Categories</label>					
-					<ul id="question-categories">
-						<li>Tag1</li>
-						<li>Tag2</li>
-					</ul>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<span>Answers</span>
+					</div>
+					<div class="panel-body answers-container">
+						<button class="btn btn-default add-answer">Add new answer</button>
+						<span class="flag-correct-hint pull-right">
+							Flag correct answers with
+							<span class="glyphicon glyphicon-ok-circle answer-correct-ok"></span>
+						</span>
+						<?php for ($i = 0; $i < 3; $i++) { ?>
+							<div class="input-group answer-wrapper <?= (0 === $i) ? 'answer-template' : ''?>">
+								<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
+									<label class="glyphicon glyphicon-remove-circle"></label>
+									<input type="radio" name="correct">
+								</span>
+								<input type="text" class="form-control">
+								<span class="input-group-btn">
+									<button class="btn btn-default answer-remove">Remove</button>
+								</span>
+							</div>
+						<?php } ?>
+					</div>
 				</div>
 
 			</div>

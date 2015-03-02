@@ -6,7 +6,7 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Suggest a question</div>
-				<div class="panel-body">
+				<form class="panel-body">
 
 				<div class="row">
 					<div class="col-lg-6">
@@ -114,7 +114,8 @@ Question text...
 					</div>
 				</div>
 
-			</div>
+				<button type="submit" class="btn btn-primary pull-right">Submit new question</button>
+			</form>
 		</div>
 	</div>
 </div>

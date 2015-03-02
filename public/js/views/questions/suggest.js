@@ -17,7 +17,6 @@ require([
 		categoriesAutocomplete = [],
 		jAnswersBlock = $('#question-answers-block'),
 		jTypeSelect = $('#question-type'),
-		jAnswersType = $('#active-answers-type'),
 		answersType = parseInt(jTypeSelect.val()),
 		jAnswersActiveArea = jAnswersBlock.find('#active-answers-' + answersType),
 
@@ -69,7 +68,6 @@ require([
 
 	jTypeSelect.on('change', function() {
 		answersType = parseInt($(this).val());
-		jAnswersType.val(answersType);
 		switch (answersType) {
 			case TYPE_RADIOS:
 			case TYPE_CHECKBOXES:
@@ -110,8 +108,21 @@ require([
 	});
 
 	$('.add-answer').on('click', function() {
-		jAnswersActiveArea.find('.answer-template').clone()
+		var template = jAnswersActiveArea.find('.answer-template').clone();
+		template.attr('name', template.attr('data-name'))
+			.removeAttr('data-name')
 			.removeClass('answer-template')
 			.appendTo(jAnswersActiveArea);
 	});
+
+	$('#question-suggest').on('submit', function() {
+		var text = $.trim(editor.getValue());
+		console.log(text);
+		$.ajax({
+			url: '/questions/suggest',
+			type: 'POST',
+			data: $(this).serialize()
+		});
+		return false;
+	})
 })

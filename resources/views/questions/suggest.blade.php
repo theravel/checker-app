@@ -6,13 +6,14 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Suggest a question</div>
-				<form class="panel-body">
+				<form class="panel-body" mathod="POST" id="question-suggest">
 
+				<input type="hidden" name="_token" value="<?=Session::token()?>" />
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Answer type</label>
-							<select class="form-control" id="question-type">
+							<select class="form-control" id="question-type" name="question-type">
 								<option value="1">Single line text</option>
 								<option value="2">Multi-line text</option>
 								<option value="3" selected="selected">Pick one</option>
@@ -24,7 +25,7 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Programming language</label>
-							<select class="form-control" id="question-program-lang">
+							<select class="form-control" id="question-program-lang" name="program-language">
 								<option value="java">Java</option>
 								<option value="javascript" selected="selected">Javascript</option>
 								<option value="ruby">Ruby</option>
@@ -41,23 +42,23 @@
 				<div class="form-group question-categories">
 					<label>Categories</label>
 					<span class="hidden" id="t-categories-placeholder">E.g. OOP, Algorithms, Patterns</span>
-					<ul id="question-categories">
+					<ul id="question-categories" name="categories">
 					</ul>
 				</div>
 
 				<div class="panel panel-default editor-panel" id="editor-area">
 					<div class="panel-heading">
 						<span class="question-text">Question text</span>
-						<div class="btn-toolbar pull-right" role="toolbar" aria-label="...">
-							<div class="btn-group" role="group" aria-label="...">
+						<div class="btn-toolbar pull-right" role="toolbar">
+							<div class="btn-group" role="group">
 								<button id="editor-preview-btn" title="Preview mode" class="btn btn-default glyphicon glyphicon-eye-open"></button>
 								<button id="editor-edit-btn" title="Edit mode" class="btn btn-default glyphicon glyphicon-edit hidden"></button>
 								<a id="editor-help-btn" href="https://guides.github.com/features/mastering-markdown/" target="_blank" title="Syntax help" class="btn btn-default glyphicon glyphicon-question-sign"></a>
 							</div>
-							<div class="btn-group" role="group" aria-label="...">
+							<div class="btn-group" role="group">
 								<button id="enable-fullscreen-btn" title="Fullscreen mode" class="btn btn-default glyphicon glyphicon-fullscreen"></button>
 							</div>
-							<div class="btn-group" role="group" aria-label="...">
+							<div class="btn-group" role="group">
 								<button id="exit-fullscreen-btn" title="Exit fullscreen" class="btn btn-default glyphicon glyphicon-resize-small hidden"></button>
 							</div>
 						</div>
@@ -65,7 +66,7 @@
 					</div>
 					<div class="panel-body">
 						<div id="editor-input">
-<textarea id="code">
+<textarea id="code" name="text">
 Code example:
 
 	function test(arg) {
@@ -94,16 +95,18 @@ Question text...
 							Flag correct answers with
 							<span class="glyphicon glyphicon-ok-circle answer-correct-ok"></span>
 						</span>
-						<input type="hidden" name="active-answers-type" id="active-answers-type" value="<?=$activeAnswerType?>" />
 						<?php foreach([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType) { ?>
 							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeAnswerType === $typeId) ?: 'hidden'; ?>">
-								<?php foreach(['answer-template', '', ''] as $className) { ?>
+								<?php foreach(['answer-template', '', ''] as $index => $className) { ?>
 									<div class="input-group answer-wrapper <?=$className?>">
 										<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
 											<label class="glyphicon glyphicon-remove-circle"></label>
-											<input type="<?=$inputType?>" class="correct-switch" name="answersCorrect[<?=$typeId?>][]">
+											<input type="<?=$inputType?>"
+												   class="correct-switch"
+												   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answersCorrect[<?=$typeId?>][]" />
 										</span>
-										<input type="text" class="form-control" name="answers[<?=$typeId?>][]">
+										<input type="text" class="form-control"
+											   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answers[<?=$typeId?>][]" />
 										<span class="input-group-btn">
 											<button class="btn btn-default answer-remove">Remove</button>
 										</span>
@@ -114,7 +117,9 @@ Question text...
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-primary pull-right">Submit new question</button>
+				<button type="submit" class="btn btn-primary pull-right">
+					Submit new question
+				</button>
 			</form>
 		</div>
 	</div>

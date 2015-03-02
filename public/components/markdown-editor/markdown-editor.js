@@ -58,6 +58,10 @@ define([
 
 			updateView = function() {
 				markdownView.setValue(editor.getValue());
+			},
+
+			getValue = function() {
+				return editor.getValue();
 			}
 		;
 
@@ -79,6 +83,7 @@ define([
 		jExitFullscreenBtn.add('#editor-help-btn').on('click', triggerFullscreenExit);
 
 		this.updateView = updateView;
+		this.getValue = getValue;
 	}
 
 	return MarkdownEditor;

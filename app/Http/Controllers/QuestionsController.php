@@ -1,6 +1,7 @@
 <?php namespace Forestest\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 class QuestionsController extends Controller {
 
@@ -42,11 +43,21 @@ class QuestionsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getSuggest()
+	public function getSuggest(Request $request)
 	{
 		return view('questions/suggest', [
 			'activeAnswerType' => 3,
 		]);
+	}
+
+	/**
+	 * Show the application dashboard to the user.
+	 *
+	 * @return Response
+	 */
+	public function postSuggest(Request $request)
+	{
+		var_dump(Session::token(), $_POST); exit;
 	}
 
 	/**

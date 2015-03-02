@@ -20,13 +20,13 @@
 							</select>
 						</div>
 					</div>
-					
+
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Programming language</label>
 							<select class="form-control" id="question-program-lang">
 								<option value="java">Java</option>
-								<option value="javascript">Javascript</option>
+								<option value="javascript" selected="selected">Javascript</option>
 								<option value="ruby">Ruby</option>
 								<option value="python">Python</option>
 								<option value="perl">Perl</option>
@@ -40,9 +40,8 @@
 
 				<div class="form-group question-categories">
 					<label>Categories</label>
-					<span class="hidden" id="t-categories-placeholder">Your categories</span>
+					<span class="hidden" id="t-categories-placeholder">E.g. OOP, Algorithms, Patterns</span>
 					<ul id="question-categories">
-						<li>Common</li>
 					</ul>
 				</div>
 
@@ -85,7 +84,7 @@ Question text...
 					</div>
 				</div>
 
-				<div class="panel panel-default">
+				<div class="panel panel-default" id="question-answers-block">
 					<div class="panel-heading">
 						<span>Answers</span>
 					</div>
@@ -95,16 +94,21 @@ Question text...
 							Flag correct answers with
 							<span class="glyphicon glyphicon-ok-circle answer-correct-ok"></span>
 						</span>
-						<?php for ($i = 0; $i < 3; $i++) { ?>
-							<div class="input-group answer-wrapper <?= (0 === $i) ? 'answer-template' : ''?>">
-								<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
-									<label class="glyphicon glyphicon-remove-circle"></label>
-									<input type="radio" name="correct">
-								</span>
-								<input type="text" class="form-control">
-								<span class="input-group-btn">
-									<button class="btn btn-default answer-remove">Remove</button>
-								</span>
+						<input type="hidden" name="active-answers-type" id="active-answers-type" value="<?=$activeAnswerType?>" />
+						<?php foreach([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType) { ?>
+							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeAnswerType === $typeId) ?: 'hidden'; ?>">
+								<?php foreach(['answer-template', '', ''] as $className) { ?>
+									<div class="input-group answer-wrapper <?=$className?>">
+										<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
+											<label class="glyphicon glyphicon-remove-circle"></label>
+											<input type="<?=$inputType?>" class="correct-switch" name="answersCorrect[<?=$typeId?>][]">
+										</span>
+										<input type="text" class="form-control" name="answers[<?=$typeId?>][]">
+										<span class="input-group-btn">
+											<button class="btn btn-default answer-remove">Remove</button>
+										</span>
+									</div>
+								<?php } ?>
 							</div>
 						<?php } ?>
 					</div>

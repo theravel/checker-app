@@ -5,6 +5,9 @@
     clear: both;
 }
 
+.tagit .tagit-new input[type="text"] {
+    width: 220px;
+}
 .question-categories .ui-widget-content.tagit-choice {
     border-color: #337ab7;
 }
@@ -36,7 +39,7 @@
 .answer-correct-toggle label {
     margin: 0;
 }
-.answer-correct-toggle input {
+.correct-switch {
     display: none;
 }
 .answer-correct-ok {

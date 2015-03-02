@@ -44,7 +44,9 @@ class QuestionsController extends Controller {
 	 */
 	public function getSuggest()
 	{
-		return view('questions/suggest');
+		return view('questions/suggest', [
+			'activeAnswerType' => 3,
+		]);
 	}
 
 	/**

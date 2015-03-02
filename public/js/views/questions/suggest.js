@@ -15,6 +15,11 @@ require([
 		jLanguageSelector = $('#question-program-lang'),
 		selectedLanguage = jLanguageSelector.val(),
 		categoriesAutocomplete = [],
+		jAnswersBlock = $('#question-answers-block'),
+		jTypeSelect = $('#question-type'),
+		jAnswersType = $('#active-answers-type'),
+		answersType = parseInt(jTypeSelect.val()),
+		jAnswersActiveArea = jAnswersBlock.find('#active-answers-' + answersType),
 
 		updateCategoriesAutocomplete = function(selectedLanguage) {
 			$.ajax({
@@ -31,7 +36,7 @@ require([
 				}
 			})
 		}
-	;
+		;
 
 	$('#question-categories').tagit({
 		allowSpaces: true,
@@ -40,7 +45,7 @@ require([
 			source: function(request, response) {
 				var term = request.term.toLowerCase(),
 					matches = [];
-				
+
 				for (var i = 0; i < categoriesAutocomplete.length; i++) {
 					var name = categoriesAutocomplete[i].toLowerCase();
 					if (0 === name.indexOf(term)) {
@@ -59,20 +64,44 @@ require([
 		updateCategoriesAutocomplete(selectedLanguage);
 	});
 
+	preview.setDefaultLanguage(selectedLanguage);
 	updateCategoriesAutocomplete(selectedLanguage);
 
-	$('#question-type').on('change', function() {
-		var type = $(this).val();
+	jTypeSelect.on('change', function() {
+		answersType = parseInt($(this).val());
+		jAnswersType.val(answersType);
+		switch (answersType) {
+			case TYPE_RADIOS:
+			case TYPE_CHECKBOXES:
+				jAnswersBlock.removeClass('hidden');
+				jAnswersBlock.find('.active-answers-area').addClass('hidden');
+				jAnswersActiveArea = jAnswersBlock.find('#active-answers-' + answersType)
+					.removeClass('hidden');
+				break;
+			case TYPE_SINGLE_LINE:
+			case TYPE_MULTI_LINE:
+			default:
+				jAnswersBlock.addClass('hidden');
+				break;
+		}
+	});
+
+	$('.answers-container').on('change', '.correct-switch', function() {
+		var jElement = $(this);
+		jElement.siblings('label').toggleClass('glyphicon-remove-circle glyphicon-ok-circle');
+		jElement.parent('.answer-correct-toggle').toggleClass('answer-correct-ok answer-correct-wrong');
 	});
 
 	$('.answers-container').on('click', '.answer-correct-toggle', function() {
-		var jElement = $(this);
-		jElement.toggleClass('answer-correct-ok answer-correct-wrong');
-		jElement.find('label').toggleClass('glyphicon-remove-circle glyphicon-ok-circle');
-		if (jElement.hasClass('answer-correct-ok')) {
-			;
-		} else {
-			// @TODO checkboxes/radios
+		var jElement = $(this),
+			jSwitch = jElement.find('.correct-switch'),
+			prevState = jSwitch.prop('checked');
+		jSwitch.prop('checked', !prevState).trigger('change');
+		if (TYPE_RADIOS === answersType) {
+			jAnswersActiveArea.find('.answer-correct-ok .correct-switch')
+				.not(jSwitch)
+				.prop('checked', false)
+				.trigger('change');
 		}
 	});
 
@@ -81,9 +110,8 @@ require([
 	});
 
 	$('.add-answer').on('click', function() {
-		var container = $(this).parents('.answers-container');
-		$('.answer-template').clone()
-				.removeClass('answer-template')
-				.appendTo(container);
+		jAnswersActiveArea.find('.answer-template').clone()
+			.removeClass('answer-template')
+			.appendTo(jAnswersActiveArea);
 	});
 })

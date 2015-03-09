@@ -6,8 +6,23 @@
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Suggest a question</div>
+
 				<form class="panel-body" mathod="POST" id="question-suggest">
 
+				<div class="errors-wrapper" id="validation-errors">
+					<div class="alert alert-danger hidden" id="error-empty-text">
+						Question text cannot be empty
+					</div>
+					<div class="alert alert-danger hidden" id="error-no-answers">
+						There should be at least two answers
+					</div>
+					<div class="alert alert-danger hidden" id="error-empty-answer">
+						Answers cannot be empty
+					</div>
+					<div class="alert alert-danger hidden" id="error-no-correct">
+						At least one answer must be flagged as correct
+					</div>
+				</div>
 				<input type="hidden" name="_token" value="<?=Session::token()?>" />
 				<div class="row">
 					<div class="col-lg-6">
@@ -51,15 +66,31 @@
 						<span class="question-text">Question text</span>
 						<div class="btn-toolbar pull-right" role="toolbar">
 							<div class="btn-group" role="group">
-								<button id="editor-preview-btn" title="Preview mode" class="btn btn-default glyphicon glyphicon-eye-open"></button>
-								<button id="editor-edit-btn" title="Edit mode" class="btn btn-default glyphicon glyphicon-edit hidden"></button>
+								<button id="editor-preview-btn"
+										title="Preview mode"
+										type="button"
+									class="btn btn-default glyphicon glyphicon-eye-open">
+								</button>
+								<button id="editor-edit-btn"
+										title="Edit mode"
+										type="button"
+									class="btn btn-default glyphicon glyphicon-edit hidden">
+								</button>
 								<a id="editor-help-btn" href="https://guides.github.com/features/mastering-markdown/" target="_blank" title="Syntax help" class="btn btn-default glyphicon glyphicon-question-sign"></a>
 							</div>
 							<div class="btn-group" role="group">
-								<button id="enable-fullscreen-btn" title="Fullscreen mode" class="btn btn-default glyphicon glyphicon-fullscreen"></button>
+								<button id="enable-fullscreen-btn"
+										title="Fullscreen mode"
+										type="button"
+									class="btn btn-default glyphicon glyphicon-fullscreen">
+								</button>
 							</div>
 							<div class="btn-group" role="group">
-								<button id="exit-fullscreen-btn" title="Exit fullscreen" class="btn btn-default glyphicon glyphicon-resize-small hidden"></button>
+								<button id="exit-fullscreen-btn"
+										title="Exit fullscreen"
+										type="button"
+									class="btn btn-default glyphicon glyphicon-resize-small hidden">
+								</button>
 							</div>
 						</div>
 						<div class="clear"></div>
@@ -90,11 +121,15 @@ Question text...
 						<span>Answers</span>
 					</div>
 					<div class="panel-body answers-container">
-						<button class="btn btn-default add-answer">Add new answer</button>
-						<span class="flag-correct-hint pull-right">
+						<button class="btn btn-default add-answer"
+								type="button">
+							Add new answer
+						</button>
+						<div class="flag-correct-hint pull-right">
 							Flag correct answers with
 							<span class="glyphicon glyphicon-ok-circle answer-correct-ok"></span>
-						</span>
+						</div>
+						<div class="clear"></div>
 						<?php foreach([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType) { ?>
 							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeAnswerType === $typeId) ?: 'hidden'; ?>">
 								<?php foreach(['answer-template', '', ''] as $index => $className) { ?>
@@ -108,7 +143,9 @@ Question text...
 										<input type="text" class="form-control"
 											   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answers[<?=$typeId?>][]" />
 										<span class="input-group-btn">
-											<button class="btn btn-default answer-remove">Remove</button>
+											<button class="btn btn-default answer-remove" type="button">
+												Remove
+											</button>
 										</span>
 									</div>
 								<?php } ?>

@@ -5,6 +5,15 @@
     clear: both;
 }
 
+.errors-wrapper .alert {
+    margin-bottom: 10px;
+}
+.errors-wrapper .alert:last-child {
+    margin-bottom: 20px;
+}
+.answer-wrapper.invalid input {
+    background: #f2dede;
+}
 .tagit .tagit-new input[type="text"] {
     width: 220px;
 }

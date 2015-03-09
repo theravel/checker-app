@@ -61,7 +61,11 @@ define([
 			},
 
 			getValue = function() {
-				return editor.getValue();
+				return $.trim(editor.getValue());
+			},
+
+			addEventHandler = function(eventType, callback) {
+				editor.on(eventType, callback);
 			}
 		;
 
@@ -84,6 +88,7 @@ define([
 
 		this.updateView = updateView;
 		this.getValue = getValue;
+		this.addEventHandler = addEventHandler;
 	}
 
 	return MarkdownEditor;

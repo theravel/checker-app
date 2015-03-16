@@ -43,6 +43,7 @@ require([
 
 	$('#question-categories').tagit({
 		allowSpaces: true,
+		fieldName: 'categories[]',
 		placeholderText: $('#t-categories-placeholder').text(),
 		autocomplete: {
 			source: function(request, response) {

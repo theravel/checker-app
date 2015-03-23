@@ -4,58 +4,25 @@ CREATE TYPE entity_types AS ENUM (
 );
 
 CREATE TABLE program_languages (
-	id integer NOT NULL,
+	id serial NOT NULL,
 	name character varying(50) NOT NULL
 );
 
-CREATE SEQUENCE program_languages_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
-
-ALTER SEQUENCE program_languages_id_seq OWNED BY program_languages.id;
-
 CREATE TABLE questions (
-	id integer NOT NULL,
+	id serial NOT NULL,
 	type smallint NOT NULL,
 	p_language_id integer NOT NULL
 );
 
 COMMENT ON COLUMN questions.p_language_id IS 'Programming language ID';
 
-CREATE SEQUENCE questions_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
-
-ALTER SEQUENCE questions_id_seq OWNED BY questions.id;
-
 CREATE TABLE texts (
-	id integer NOT NULL,
+	id serial NOT NULL,
 	entity_id bigint NOT NULL,
 	entity_type entity_types NOT NULL,
 	language character varying(10) NOT NULL,
 	text text NOT NULL
 );
-
-CREATE SEQUENCE texts_id_seq
-	START WITH 1
-	INCREMENT BY 1
-	NO MINVALUE
-	NO MAXVALUE
-	CACHE 1;
-
-ALTER SEQUENCE texts_id_seq OWNED BY texts.id;
-
-ALTER TABLE ONLY program_languages ALTER COLUMN id SET DEFAULT nextval('program_languages_id_seq'::regclass);
-
-ALTER TABLE ONLY questions ALTER COLUMN id SET DEFAULT nextval('questions_id_seq'::regclass);
-
-ALTER TABLE ONLY texts ALTER COLUMN id SET DEFAULT nextval('texts_id_seq'::regclass);
 
 ALTER TABLE ONLY program_languages
 	ADD CONSTRAINT program_languages_pkey PRIMARY KEY (id);

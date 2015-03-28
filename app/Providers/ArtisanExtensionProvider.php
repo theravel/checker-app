@@ -10,7 +10,7 @@ class ArtisanExtensionProvider extends ServiceProvider {
 	public function register() {
 		$this->app['migrate:create'] = $this->app->share(function($app) {
 			$generator = new Generator($app['files']);
-			return new MigrateCreate($generator);
+			return new MigrateCreate($generator, $app['composer']);
 		});
 		$this->commands('migrate:create');
 	}

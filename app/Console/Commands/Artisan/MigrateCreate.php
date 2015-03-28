@@ -1,5 +1,6 @@
 <?php namespace Forestest\Console\Commands\Artisan;
 
+use Illuminate\Foundation\Composer;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -15,6 +16,11 @@ class MigrateCreate extends BaseCommand {
 	 */
 	protected $generator;
 
+	/**
+	 * @var \Illuminate\Foundation\Composer
+	 */
+	protected $composer;
+
 	protected function getArguments()
 	{
 		return [
@@ -22,10 +28,11 @@ class MigrateCreate extends BaseCommand {
 		];
 	}
 
-	public function __construct(Generator $generator)
+	public function __construct(Generator $generator, Composer $composer)
 	{
 		parent::__construct();
 		$this->generator = $generator;
+		$this->composer = $composer;
 	}
 
 	public function fire()
@@ -34,6 +41,7 @@ class MigrateCreate extends BaseCommand {
 		$path = $this->getMigrationPath();
 		$file = pathinfo($this->generator->create($name, $path), PATHINFO_FILENAME);
 		$this->line("<info>Created Migration:</info> $file");
+		$this->composer->dumpAutoloads();
 	}
 
 }

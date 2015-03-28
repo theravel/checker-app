@@ -5,13 +5,15 @@ CREATE TYPE entity_types AS ENUM (
 
 CREATE TABLE program_languages (
 	id serial NOT NULL,
-	name character varying(50) NOT NULL
+	name character varying(50) NOT NULL,
+	CONSTRAINT program_languages_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE questions (
 	id serial NOT NULL,
 	type smallint NOT NULL,
-	p_language_id integer NOT NULL
+	p_language_id integer NOT NULL,
+	CONSTRAINT questions_pkey PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN questions.p_language_id IS 'Programming language ID';
@@ -21,14 +23,10 @@ CREATE TABLE texts (
 	entity_id bigint NOT NULL,
 	entity_type entity_types NOT NULL,
 	language character varying(10) NOT NULL,
-	text text NOT NULL
+	text text NOT NULL,
+	CONSTRAINT texts_pkey PRIMARY KEY (id)
 );
 
-ALTER TABLE ONLY program_languages
-	ADD CONSTRAINT program_languages_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY texts
-	ADD CONSTRAINT texts_pkey PRIMARY KEY (id);
 
 CREATE INDEX fki_p_language_id ON questions USING btree (p_language_id);
 

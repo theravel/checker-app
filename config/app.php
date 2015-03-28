@@ -144,6 +144,7 @@ return [
 		'Forestest\Providers\ConfigServiceProvider',
 		'Forestest\Providers\EventServiceProvider',
 		'Forestest\Providers\RouteServiceProvider',
+		'Forestest\Providers\ArtisanExtensionProvider',
 
 	],
 

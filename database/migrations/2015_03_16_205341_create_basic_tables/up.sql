@@ -6,17 +6,18 @@ CREATE TYPE entity_types AS ENUM (
 CREATE TABLE program_languages (
 	id serial NOT NULL,
 	name character varying(50) NOT NULL,
+	highlight_alias character varying(50),
 	CONSTRAINT program_languages_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE questions (
 	id serial NOT NULL,
 	type smallint NOT NULL,
-	p_language_id integer NOT NULL,
+	p_language_id integer NOT NULL, -- Programming language ID
+	created_at timestamp without time zone,
+	updated_at timestamp without time zone,
 	CONSTRAINT questions_pkey PRIMARY KEY (id)
 );
-
-COMMENT ON COLUMN questions.p_language_id IS 'Programming language ID';
 
 CREATE TABLE texts (
 	id serial NOT NULL,

@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Session;
 
+use Forestest\Models\Question;
+use Forestest\Models\ProgramLanguage;
+
 class QuestionsController extends Controller {
 
 	/*
@@ -43,10 +46,12 @@ class QuestionsController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getSuggest(Request $request)
+	public function getSuggest()
 	{
 		return view('questions/suggest', [
-			'activeAnswerType' => 3,
+			'programLanguages' => ProgramLanguage::allOrdered()->get(),
+			'questionTypes' => Question::getTypes(),
+			'activeQuestionType' => Question::TYPE_RADIOS,
 		]);
 	}
 

@@ -29,10 +29,12 @@
 						<div class="form-group">
 							<label for="usr">Answer type</label>
 							<select class="form-control" id="question-type" name="question-type">
-								<option value="1">Single line text</option>
-								<option value="2">Multi-line text</option>
-								<option value="3" selected="selected">Pick one</option>
-								<option value="4">Check all that apply</option>
+								<?php foreach ($questionTypes as $id => $text) { ?>
+									<option value="<?=$id?>"
+											<?= ($id === $activeQuestionType) ? 'selected="selected"' : ''?>>
+										<?=$text?>
+									</option>
+								<?php } ?>
 							</select>
 						</div>
 					</div>
@@ -41,14 +43,13 @@
 						<div class="form-group">
 							<label for="usr">Programming language</label>
 							<select class="form-control" id="question-program-lang" name="program-language">
-								<option value="java">Java</option>
-								<option value="javascript" selected="selected">Javascript</option>
-								<option value="ruby">Ruby</option>
-								<option value="python">Python</option>
-								<option value="perl">Perl</option>
-								<option value="php">PHP</option>
-								<option value="cs">C#</option>
-								<option value="cpp">C++</option>
+								<?php foreach ($programLanguages as $programLanguage) { ?>
+									<option value="<?= $programLanguage->getId() ?>"
+											data-highlight="<?= $programLanguage->getHighlightAlias() ?>"
+											<?= $programLanguage->isDefaultSelected() ? 'selected="selected"' : '' ?>>
+										<?= $programLanguage->getName() ?>
+									</option>
+								<?php } ?>
 							</select>
 						</div>
 					</div>
@@ -131,7 +132,7 @@ Question text...
 						</div>
 						<div class="clear"></div>
 						<?php foreach([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType) { ?>
-							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeAnswerType === $typeId) ?: 'hidden'; ?>">
+							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeQuestionType === $typeId) ?: 'hidden'; ?>">
 								<?php foreach(['answer-template', '', ''] as $index => $className) { ?>
 									<div class="input-group answer-wrapper <?=$className?>">
 										<span class="input-group-addon answer-correct-toggle answer-correct-wrong">

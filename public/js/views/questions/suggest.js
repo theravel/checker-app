@@ -14,7 +14,8 @@ require([
 	var preview = new MarkdownView(),
 		editor = new MarkdownEditor(preview),
 		jLanguageSelector = $('#question-program-lang'),
-		selectedLanguage = jLanguageSelector.val(),
+		selectedLanguageId = jLanguageSelector.val(),
+		selectedLanguageAlias = jLanguageSelector.find('option:selected').data('highlight'),
 		categoriesAutocomplete = [],
 		jAnswersBlock = $('#question-answers-block'),
 		jTypeSelect = $('#question-type'),
@@ -24,11 +25,11 @@ require([
 
 
 	/*** categories-tags ***/
-	var updateCategoriesAutocomplete = function(selectedLanguage) {
+	var updateCategoriesAutocomplete = function(selectedLanguageId) {
 			$.ajax({
 				url: '/questions/categories',
 				data: {
-					language: selectedLanguage
+					language: selectedLanguageId
 				},
 				dataType: 'json',
 				success: function(data) {
@@ -62,14 +63,15 @@ require([
 	});
 
 	jLanguageSelector.on('change', function() {
-		selectedLanguage = $(this).val();
-		preview.setDefaultLanguage(selectedLanguage);
+		selectedLanguageId = $(this).val();
+		selectedLanguageAlias = $(this).find('option:selected').data('highlight');
+		preview.setDefaultLanguage(selectedLanguageAlias);
 		editor.updateView();
-		updateCategoriesAutocomplete(selectedLanguage);
+		updateCategoriesAutocomplete(selectedLanguageId);
 	});
 
-	preview.setDefaultLanguage(selectedLanguage);
-	updateCategoriesAutocomplete(selectedLanguage);
+	preview.setDefaultLanguage(selectedLanguageAlias);
+	updateCategoriesAutocomplete(selectedLanguageId);
 
 
 	/*** answers area ***/

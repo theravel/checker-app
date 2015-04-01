@@ -28,7 +28,7 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Answer type</label>
-							<select class="form-control" id="question-type" name="question-type">
+							<select class="form-control" id="question-type" name="questionType">
 								<?php foreach ($questionTypes as $id => $text) { ?>
 									<option value="<?=$id?>"
 											<?= ($id === $activeQuestionType) ? 'selected="selected"' : ''?>>
@@ -42,7 +42,7 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label for="usr">Programming language</label>
-							<select class="form-control" id="question-program-lang" name="program-language">
+							<select class="form-control" id="question-program-lang" name="programLanguage">
 								<?php foreach ($programLanguages as $programLanguage) { ?>
 									<option value="<?= $programLanguage->getId() ?>"
 											data-highlight="<?= $programLanguage->getHighlightAlias() ?>"

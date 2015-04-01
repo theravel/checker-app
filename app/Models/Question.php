@@ -1,8 +1,9 @@
 <?php namespace Forestest\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Forestest\Models\Text;
+use Forestest\Models\Base\TranslationAwareModel;
 
-class Question extends Model {
+class Question extends TranslationAwareModel {
 
 	const TYPE_SINGLE_LINE = 1;
 	const TYPE_MULTI_LINE = 2;
@@ -16,6 +17,10 @@ class Question extends Model {
 	}
 
 	/*** methods ***/
+	public function getTranslationType() {
+		return Text::ENTITY_TYPE_QUESTION;
+	}
+
 	public static function getTypes()
 	{
 		// @TODO refactor

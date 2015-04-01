@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Session;
 
+use Forestest\Models\Text;
 use Forestest\Models\Question;
 use Forestest\Models\ProgramLanguage;
 
@@ -62,7 +63,11 @@ class QuestionsController extends Controller {
 	 */
 	public function postSuggest(Request $request)
 	{
-		var_dump(Session::token(), $_POST); exit;
+		$question = new Question();
+		$question->setType($request->get('questionType'));
+		$question->setProgramLanguageId($request->get('programLanguage'));
+		$question->setText('ru', $request->get('text'));
+		$question->save();
 	}
 
 	/**

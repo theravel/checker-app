@@ -36,6 +36,7 @@ require([
 					categoriesAutocomplete = data;
 				},
 				error: function(request, status, error) {
+					// @TODO fix
 					console.error(request, status, error);
 				}
 			})
@@ -172,12 +173,6 @@ require([
 			$('#validation-errors .alert').addClass('hidden');
 		}
 	;
-
-	$('.answers-container').on('keyup', 'input[type="text"]', function() {
-		if ($.trim($(this).val()).length > 0) {
-			validationCheck.emptyAnswer();
-		}
-	});
 
 	editor.addEventHandler('change', function() {
 		if (editor.getValue().length > 0) {

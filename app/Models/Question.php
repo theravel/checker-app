@@ -1,6 +1,6 @@
 <?php namespace Forestest\Models;
 
-use Forestest\Models\Text;
+use Forestest\Models\Translation;
 use Forestest\Models\Base\TranslationAwareModel;
 
 class Question extends TranslationAwareModel {
@@ -18,7 +18,7 @@ class Question extends TranslationAwareModel {
 
 	/*** methods ***/
 	public function getTranslationType() {
-		return Text::ENTITY_TYPE_QUESTION;
+		return Translation::ENTITY_TYPE_QUESTION;
 	}
 
 	public static function getTypes()

@@ -1,20 +1,20 @@
 <?php namespace Forestest\Models\Base;
 
 use DB;
-use Forestest\Models\Text;
+use Forestest\Models\Translation;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class TranslationAwareModel extends Model {
 
 	/**
-	 * @var \Forestest\Models\Text
+	 * @var \Forestest\Models\Translation
 	 */
 	protected $translation;
 
-	public function setText($language, $text)
+	public function setTranslation($language, $text)
 	{
 		if (null === $this->translation) {
-			$this->translation = new Text();
+			$this->translation = new Translation();
 		}
 		$this->translation->setEntityType($this->getTranslationType());
 		$this->translation->setLanguage($language);

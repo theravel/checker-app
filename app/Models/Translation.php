@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Text extends Model {
+class Translation extends Model {
 
 	const ENTITY_TYPE_QUESTION = 'QUESTION';
 	const ENTITY_TYPE_ANSWER = 'ANSWER';

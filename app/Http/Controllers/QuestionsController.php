@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Session;
 
-use Forestest\Models\Text;
+use Forestest\Models\Translation;
 use Forestest\Models\Question;
 use Forestest\Models\ProgramLanguage;
 
@@ -66,7 +66,7 @@ class QuestionsController extends Controller {
 		$question = new Question();
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
-		$question->setText('ru', $request->get('text'));
+		$question->setTranslation('ru', $request->get('text'));
 		$question->save();
 	}
 

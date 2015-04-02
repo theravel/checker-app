@@ -1,0 +1,1 @@
+ALTER TABLE texts RENAME TO translations;

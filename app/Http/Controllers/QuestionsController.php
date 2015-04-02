@@ -67,6 +67,7 @@ class QuestionsController extends Controller {
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
 		$question->setTranslation('ru', $request->get('text'));
+		$question->setTranslation('en', $request->get('text'));
 		$question->save();
 	}
 

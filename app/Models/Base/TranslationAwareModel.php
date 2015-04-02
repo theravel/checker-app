@@ -7,25 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 abstract class TranslationAwareModel extends Model {
 
 	/**
-	 * @var \Forestest\Models\Translation
+	 * @var \Forestest\Models\Translation[]
 	 */
-	protected $translation;
+	protected $translations = array();
 
 	public function setTranslation($language, $text)
 	{
-		if (null === $this->translation) {
-			$this->translation = new Translation();
+		if (!isset($this->translations[$language])) {
+			$this->translations[$language] = new Translation();
 		}
-		$this->translation->setEntityType($this->getTranslationType());
-		$this->translation->setLanguage($language);
-		$this->translation->setText($text);
+		$translation = $this->translations[$language];
+		$translation->setEntityType($this->getTranslationType());
+		$translation->setLanguage($language);
+		$translation->setText($text);
 	}
 
 	public function save(array $options = array()) {
-		DB::transaction(function() use ($options) {
+		$translations = $this->translations;
+		DB::transaction(function() use ($options, $translations) {
 			parent::save($options);
-			$this->translation->setEntityId($this->getId());
-			$this->translation->save();
+			foreach ($translations as $translation) {
+				$translation->setEntityId($this->getId());
+				$translation->save();
+			}
 		});
 	}
 

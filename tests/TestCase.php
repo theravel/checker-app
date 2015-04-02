@@ -1,6 +1,8 @@
-<?php
+<?php namespace Forestest\Tests;
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase {
+use Illuminate\Foundation\Testing\TestCase as IlluminateTestCase;
+
+class TestCase extends IlluminateTestCase {
 
 	/**
 	 * Creates the application.

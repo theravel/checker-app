@@ -16,6 +16,11 @@ class Question extends TranslationAwareModel {
 		return $this->hasOne('Forestest\Models\ProgramLanguage', 'id', 'p_language_id');
 	}
 
+	public function answers()
+	{
+		return $this->hasMany('Forestest\Models\Answer', 'question_id', 'id');
+	}
+
 	/*** methods ***/
 	public function getTranslationType() {
 		return Translation::ENTITY_TYPE_QUESTION;

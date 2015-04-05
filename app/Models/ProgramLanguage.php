@@ -1,8 +1,8 @@
 <?php namespace Forestest\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Forestest\Models\Base\BaseModel;
 
-class ProgramLanguage extends Model {
+class ProgramLanguage extends BaseModel {
 
 	const DEFAULT_SELECTED = 7;
 

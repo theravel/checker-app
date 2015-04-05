@@ -1,12 +1,10 @@
 <?php namespace Forestest\Models\Base;
 
+use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Translation;
 use Forestest\Models\Traits\CacheAwareTrait;
 
-use DB;
-use Illuminate\Database\Eloquent\Model;
-
-abstract class TranslationAwareModel extends Model {
+abstract class TranslationAwareModel extends BaseModel {
 
 	use CacheAwareTrait;
 
@@ -28,12 +26,7 @@ abstract class TranslationAwareModel extends Model {
 
 	public function getTranslation($language)
 	{
-		$key = sprintf(
-			'translation_%s_%s_%s',
-			$this->getId(),
-			$this->getTranslationType(),
-			$language
-		);
+		$key = $this->getCacheKey($language);
 		$text = $this->getCache($key);
 		if (null === $text) {
 			$translation = Translation::where('entity_id', '=', $this->getId())
@@ -48,18 +41,27 @@ abstract class TranslationAwareModel extends Model {
 
 	public function save(array $options = array())
 	{
-		$translations = $this->translations;
-		DB::transaction(function() use ($options, $translations) {
-			parent::save($options);
-			foreach ($translations as $translation) {
-				$translation->setEntityId($this->getId());
-				$translation->save();
-			}
-		});
+		parent::save($options);
+		foreach ($this->translations as $translation) {
+			$translation->setEntityId($this->getId());
+			$translation->save();
+			$key = $this->getCacheKey($translation->getLanguage());
+			$this->setCache($key, $translation->getText(), $this->expires['day']);
+		}
 	}
 
 	abstract protected function getId();
 	abstract protected function getTranslationType();
+
+	private function getCacheKey($language)
+	{
+		return sprintf(
+			'translation_%s_%s_%s',
+			$this->getId(),
+			$this->getTranslationType(),
+			$language
+		);
+	}
 
 }
 

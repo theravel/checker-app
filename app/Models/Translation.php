@@ -1,11 +1,13 @@
 <?php namespace Forestest\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Forestest\Models\Base\BaseModel;
 
-class Translation extends Model {
+class Translation extends BaseModel {
 
 	const ENTITY_TYPE_QUESTION = 'QUESTION';
 	const ENTITY_TYPE_ANSWER = 'ANSWER';
+
+	const LANGUAGE_DEFAULT = 'ru';
 
 	public $timestamps = false;
 

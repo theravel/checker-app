@@ -1,30 +1,16 @@
 <?php namespace Forestest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Session;
+use DB;
+use Input;
 
-use Forestest\Models\Translation;
+use Forestest\Models\Answer;
 use Forestest\Models\Question;
+use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
 
 class QuestionsController extends Controller {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller renders your application's "dashboard" for users that
-	| are authenticated. Of course, you are free to change or remove the
-	| controller as you wish. It is just here to get your app started!
-	|
-	*/
-
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
 	public function __construct()
 	{
 		$uri = static::getRouter()->getCurrentRoute()->getUri();
@@ -42,11 +28,6 @@ class QuestionsController extends Controller {
 			->share('pageJs', "$controller/$action");
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
 	public function getSuggest()
 	{
 		return view('questions/suggest', [
@@ -56,26 +37,18 @@ class QuestionsController extends Controller {
 		]);
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
 	public function postSuggest(Request $request)
 	{
 		$question = new Question();
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
-		$question->setTranslation('ru', $request->get('text'));
-		$question->setTranslation('en', $request->get('text'));
-		$question->save();
+		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
+		$this->processAnswers($question);
+		DB::transaction(function() use ($question) {
+			$question->save();
+		});
 	}
 
-	/**
-	 * Show the application dashboard to the user.
-	 *
-	 * @return Response
-	 */
 	public function getCategories(Request $request)
 	{
 		$language = $request->get('language');
@@ -97,6 +70,28 @@ class QuestionsController extends Controller {
 			];
 		}
 		return response()->json($categories);
+	}
+
+	private function processAnswers(Question $question)
+	{
+		$typesWithAnswers = [Question::TYPE_RADIOS, Question::TYPE_CHECKBOXES];
+		if (!in_array($question->getType(), $typesWithAnswers)) {
+			// answer choices can exist only for such types
+			return;
+		}
+		$answers = Input::get('answers');
+		$answersCorrect = Input::get('answersCorrect');
+		$questionType = $question->getType();
+		// is array?
+		foreach ($answers[$questionType] as $index => $answerText) {
+			$answer = new Answer();
+			if (!isset($answersCorrect[$questionType][$index])) {
+				;//@TODO
+			}
+			$answer->setIsCorrect($answersCorrect[$questionType][$index]);
+			$answer->setTranslation(Translation::LANGUAGE_DEFAULT, $answerText);
+			$question->addAnswer($answer);
+		}
 	}
 
 }

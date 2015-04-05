@@ -1,5 +1,6 @@
 <?php namespace Forestest\Models;
 
+use Forestest\Models\Answer;
 use Forestest\Models\Translation;
 use Forestest\Models\Base\TranslationAwareModel;
 
@@ -9,6 +10,11 @@ class Question extends TranslationAwareModel {
 	const TYPE_MULTI_LINE = 2;
 	const TYPE_RADIOS = 3;
 	const TYPE_CHECKBOXES = 4;
+
+	/**
+	 * @var \Forestest\Models\Answer[] 
+	 */
+	private $answers = [];
 
 	/*** relations ***/
 	public function programLanguage()
@@ -24,6 +30,20 @@ class Question extends TranslationAwareModel {
 	/*** methods ***/
 	public function getTranslationType() {
 		return Translation::ENTITY_TYPE_QUESTION;
+	}
+
+	public function addAnswer(Answer $answer)
+	{
+		$this->answers[] = $answer;
+	}
+
+	public function save(array $options = array())
+	{
+		parent::save($options);
+		foreach ($this->answers as $answer) {
+			$answer->setQuestionId($this->getId());
+			$answer->save();
+		}
 	}
 
 	public static function getTypes()

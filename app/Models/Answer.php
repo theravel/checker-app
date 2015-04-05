@@ -5,6 +5,8 @@ use Forestest\Models\Base\TranslationAwareModel;
 
 class Answer extends TranslationAwareModel {
 
+	public $timestamps = false;
+
 	/*** methods ***/
 	public function getTranslationType() {
 		return Translation::ENTITY_TYPE_ANSWER;

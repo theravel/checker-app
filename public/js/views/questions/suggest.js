@@ -97,8 +97,12 @@ require([
 
 	$('.answers-container').on('change', '.correct-switch', function() {
 		var jElement = $(this);
-		jElement.siblings('label').toggleClass('glyphicon-remove-circle glyphicon-ok-circle');
-		jElement.parent('.answer-correct-toggle').toggleClass('answer-correct-ok answer-correct-wrong');
+		jElement.siblings('.correct-switch-value')
+			.val(jElement.prop('checked') ? 1 : 0);
+		jElement.siblings('label')
+			.toggleClass('glyphicon-remove-circle glyphicon-ok-circle');
+		jElement.parent('.answer-correct-toggle')
+			.toggleClass('answer-correct-ok answer-correct-wrong');
 	});
 
 	$('.answers-container').on('click', '.answer-correct-toggle', function() {
@@ -119,10 +123,13 @@ require([
 	});
 
 	$('.add-answer').on('click', function() {
-		var template = jAnswersActiveArea.find('.answer-template').clone();
-		template.attr('name', template.attr('data-name'))
-			.removeAttr('data-name')
-			.removeClass('answer-template')
+		var jTemplate = jAnswersActiveArea.find('.answer-template').clone();
+		jTemplate.find('[data-name]').each(function() {
+			var jInput = $(this);
+			jInput.attr('name', jInput.attr('data-name'))
+				.removeAttr('data-name');
+		});
+		jTemplate.removeClass('answer-template')
 			.appendTo(jAnswersActiveArea);
 		validationCheck.noAnswers();
 	});

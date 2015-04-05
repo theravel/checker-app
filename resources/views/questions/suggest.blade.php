@@ -137,11 +137,13 @@ Question text...
 									<div class="input-group answer-wrapper <?=$className?>">
 										<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
 											<label class="glyphicon glyphicon-remove-circle"></label>
-											<input type="<?=$inputType?>"
-												   class="correct-switch"
-												   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answersCorrect[<?=$typeId?>][]" />
+											<input type="<?=$inputType?>" class="correct-switch" />
+											<input type="hidden"
+												   class="correct-switch-value"
+												   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answersCorrect[<?=$typeId?>][]"
+												   value="0" />
 										</span>
-										<input type="text" class="form-control"
+										<input type="text" class="form-control answer-text"
 											   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answers[<?=$typeId?>][]" />
 										<span class="input-group-btn">
 											<button class="btn btn-default answer-remove" type="button">

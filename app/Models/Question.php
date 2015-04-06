@@ -3,6 +3,7 @@
 use Forestest\Models\Answer;
 use Forestest\Models\Translation;
 use Forestest\Models\Base\TranslationAwareModel;
+use Forestest\Exceptions\ValidationException;
 
 class Question extends TranslationAwareModel {
 
@@ -40,15 +41,12 @@ class Question extends TranslationAwareModel {
 	public function save(array $options = array())
 	{
 		parent::save($options);
-		foreach ($this->answers as $answer) {
-			$answer->setQuestionId($this->getId());
-			$answer->save();
-		}
+		$this->answers()->saveMany($this->answers);
 	}
 
 	public static function getTypes()
 	{
-		// @TODO refactor
+		// @TODO refactor, add languages support
 		return [
 			self::TYPE_SINGLE_LINE => 'Single line text',
 			self::TYPE_MULTI_LINE => 'Multi-line text',
@@ -74,13 +72,21 @@ class Question extends TranslationAwareModel {
 	}
 
 	/*** setters ***/
+
 	public function setId($id)
 	{
 		$this->attributes['id'] = $id;
 	}
 
+	/**
+	 * @param int $id
+	 * @throws \Forestest\Exceptions\ValidationException
+	 */
 	public function setType($type)
 	{
+		if (!in_array($type, array_keys(self::getTypes()))) {
+			throw new ValidationException('Question type is invalid');
+		}
 		$this->attributes['type'] = $type;
 	}
 

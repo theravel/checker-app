@@ -41,7 +41,7 @@ class Answer extends TranslationAwareModel {
 
 	public function setIsCorrect($isCorrect)
 	{
-		$this->attributes['is_correct'] = $isCorrect;
+		$this->attributes['is_correct'] = (boolean)$isCorrect;
 	}
 
 }

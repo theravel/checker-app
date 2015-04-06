@@ -8,6 +8,7 @@ use Forestest\Models\Answer;
 use Forestest\Models\Question;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
+use Forestest\Exceptions\ValidationException;
 
 class QuestionsController extends Controller {
 
@@ -79,19 +80,32 @@ class QuestionsController extends Controller {
 			// answer choices can exist only for such types
 			return;
 		}
-		$answers = Input::get('answers');
-		$answersCorrect = Input::get('answersCorrect');
-		$questionType = $question->getType();
-		// is array?
-		foreach ($answers[$questionType] as $index => $answerText) {
+		foreach ($this->getAnswersInput($question) as $index => $answerText) {
 			$answer = new Answer();
-			if (!isset($answersCorrect[$questionType][$index])) {
-				;//@TODO
-			}
-			$answer->setIsCorrect($answersCorrect[$questionType][$index]);
+			$answer->setIsCorrect($this->getAnswersFlagsInput($question, $index));
 			$answer->setTranslation(Translation::LANGUAGE_DEFAULT, $answerText);
 			$question->addAnswer($answer);
 		}
+	}
+
+	private function getAnswersInput(Question $question)
+	{
+		$answers = Input::get('answers');
+		$questionType = $question->getType();
+		if (!isset($answers[$questionType]) || !is_array($answers[$questionType])) {
+			throw new ValidationException('Answers data is invalid');
+		}
+		return $answers[$questionType];
+	}
+
+	private function getAnswersFlagsInput(Question $question, $answerIndex)
+	{
+		$answersCorrect = Input::get('answersCorrect');
+		$questionType = $question->getType();
+		if (!isset($answersCorrect[$questionType][$answerIndex])) {
+			throw new ValidationException('Answer is flagged neither correct nor incorrect');
+		}
+		return $answersCorrect[$questionType][$answerIndex];
 	}
 
 }

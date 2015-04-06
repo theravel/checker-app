@@ -3,6 +3,7 @@
 use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Translation;
 use Forestest\Models\Traits\CacheAwareTrait;
+use Forestest\Exceptions\ValidationException;
 
 abstract class TranslationAwareModel extends BaseModel {
 
@@ -15,6 +16,12 @@ abstract class TranslationAwareModel extends BaseModel {
 
 	public function setTranslation($language, $text)
 	{
+		if (!strlen(trim($text))) {
+			throw new ValidationException(sprintf(
+				'Translation text is empty [%s] [%s]',
+				$this->getTranslationType(), $language
+			));
+		}
 		if (!isset($this->translations[$language])) {
 			$this->translations[$language] = new Translation();
 		}

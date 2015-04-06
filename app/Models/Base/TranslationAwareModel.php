@@ -12,7 +12,7 @@ abstract class TranslationAwareModel extends BaseModel {
 	/**
 	 * @var \Forestest\Models\Translation[]
 	 */
-	protected $translations = array();
+	protected $translations = [];
 
 	public function setTranslation($language, $text)
 	{

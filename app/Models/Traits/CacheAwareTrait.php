@@ -4,12 +4,12 @@ use Cache;
 
 trait CacheAwareTrait {
 
-	protected $expires = array(
+	protected $expires = [
 		'minute' => 60,
 		'hour'   => 60 * 60,
 		'day'    => 60 * 60 * 24,
 		'week'   => 60 * 60 * 24 * 7,
-	);
+	];
 
 	protected function setCache($key, $value, $expires)
 	{

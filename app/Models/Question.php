@@ -1,6 +1,7 @@
 <?php namespace Forestest\Models;
 
-use Forestest\Models\Answer;
+use DB;
+
 use Forestest\Models\Translation;
 use Forestest\Models\Base\TranslationAwareModel;
 use Forestest\Exceptions\ValidationException;
@@ -11,11 +12,6 @@ class Question extends TranslationAwareModel {
 	const TYPE_MULTI_LINE = 2;
 	const TYPE_RADIOS = 3;
 	const TYPE_CHECKBOXES = 4;
-
-	/**
-	 * @var \Forestest\Models\Answer[] 
-	 */
-	private $answers = [];
 
 	/*** relations ***/
 	public function programLanguage()
@@ -33,15 +29,17 @@ class Question extends TranslationAwareModel {
 		return Translation::ENTITY_TYPE_QUESTION;
 	}
 
-	public function addAnswer(Answer $answer)
+	/**
+	 * @param Forestest\Models\Answer[] $answers
+	 */
+	public function saveWithAnswers(array $answers)
 	{
-		$this->answers[] = $answer;
-	}
-
-	public function save(array $options = array())
-	{
-		parent::save($options);
-		$this->answers()->saveMany($this->answers);
+		$this->validateAnswers($answers);
+		$self = $this;
+		DB::transaction(function() use ($self, $answers) {
+			$self->save();
+			$self->answers()->saveMany($answers);
+		});
 	}
 
 	public static function getTypes()
@@ -53,6 +51,42 @@ class Question extends TranslationAwareModel {
 			self::TYPE_RADIOS => 'Pick one',
 			self::TYPE_CHECKBOXES => 'Check all that apply',
 		];
+	}
+
+	/**
+	 * Such question types cannot have answers
+	 *
+	 * @return array
+	 */
+	public static function getTypesWithoutAnswers()
+	{
+		return [
+			self::TYPE_SINGLE_LINE,
+			self::TYPE_MULTI_LINE,
+		];
+	}
+
+	/**
+	 * @return Forestest\Models\Answer[] $answers
+	 */
+	private function validateAnswers(array $answers)
+	{
+		if (in_array($this->getType(), self::getTypesWithoutAnswers())) {
+			return;
+		}
+		if (count($answers) < 2) {
+			throw new ValidationException('At least two answers must exist');
+		}
+		$correctAnswerExist = false;
+		foreach ($answers as $answer) {
+			if ($answer->getIsCorrect()) {
+				$correctAnswerExist = true;
+				break;
+			}
+		}
+		if (!$correctAnswerExist) {
+			throw new ValidationException('At least one answer must be flagged as correct');
+		}
 	}
 
 	/*** getters ***/

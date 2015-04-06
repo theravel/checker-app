@@ -1,7 +1,6 @@
 <?php namespace Forestest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 use Input;
 
 use Forestest\Models\Answer;
@@ -44,10 +43,7 @@ class QuestionsController extends Controller {
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
 		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
-		$this->processAnswers($question);
-		DB::transaction(function() use ($question) {
-			$question->save();
-		});
+		$question->saveWithAnswers($this->getAnswerModels($question));
 	}
 
 	public function getCategories(Request $request)
@@ -73,19 +69,19 @@ class QuestionsController extends Controller {
 		return response()->json($categories);
 	}
 
-	private function processAnswers(Question $question)
+	private function getAnswerModels(Question $question)
 	{
-		$typesWithAnswers = [Question::TYPE_RADIOS, Question::TYPE_CHECKBOXES];
-		if (!in_array($question->getType(), $typesWithAnswers)) {
-			// answer choices can exist only for such types
-			return;
+		$result = [];
+		if (in_array($question->getType(), Question::getTypesWithoutAnswers())) {
+			return $result;
 		}
 		foreach ($this->getAnswersInput($question) as $index => $answerText) {
 			$answer = new Answer();
 			$answer->setIsCorrect($this->getAnswersFlagsInput($question, $index));
 			$answer->setTranslation(Translation::LANGUAGE_DEFAULT, $answerText);
-			$question->addAnswer($answer);
+			$result[] = $answer;
 		}
+		return $result;
 	}
 
 	private function getAnswersInput(Question $question)

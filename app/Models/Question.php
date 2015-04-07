@@ -24,6 +24,11 @@ class Question extends TranslationAwareModel {
 		return $this->hasMany('Forestest\Models\Answer', 'question_id', 'id');
 	}
 
+	public function categories()
+	{
+		return $this->belongsToMany('Forestest\Models\Category', 'question_category');
+	}
+
 	/*** methods ***/
 	public function getTranslationType() {
 		return Translation::ENTITY_TYPE_QUESTION;
@@ -103,6 +108,11 @@ class Question extends TranslationAwareModel {
 	public function getProgramLanguage()
 	{
 		return $this->programLanguage;
+	}
+
+	public function getCategories()
+	{
+		return $this->categories;
 	}
 
 	/*** setters ***/

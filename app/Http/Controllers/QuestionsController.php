@@ -8,6 +8,7 @@ use Forestest\Models\Question;
 use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
+use Forestest\Repositories\Categories;
 use Forestest\Exceptions\ValidationException;
 
 class QuestionsController extends Controller {
@@ -45,6 +46,7 @@ class QuestionsController extends Controller {
 		$question->setProgramLanguageId($request->get('programLanguage'));
 		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
 		$question->saveWithAnswers($this->getAnswerModels($question));
+		$this->attachCategories($question);
 	}
 
 	public function getCategories(Request $request)
@@ -91,6 +93,19 @@ class QuestionsController extends Controller {
 			throw new ValidationException('Answer is flagged neither correct nor incorrect');
 		}
 		return $answersCorrect[$questionType][$answerIndex];
+	}
+
+	private function attachCategories(Question $question)
+	{
+		$categoryNames = Input::get('categories', []);
+		if (!is_array($categoryNames)) {
+			throw new ValidationException('Categories have invalid format');
+		}
+		$repository = new Categories();
+		$categoriesIds = $repository->getOrCreateIds($categoryNames);
+		if (!empty($categoriesIds)) {
+			$question->categories()->attach($categoriesIds);
+		}
 	}
 
 }

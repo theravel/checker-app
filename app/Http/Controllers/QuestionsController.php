@@ -5,6 +5,7 @@ use Input;
 
 use Forestest\Models\Answer;
 use Forestest\Models\Question;
+use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
 use Forestest\Exceptions\ValidationException;
@@ -48,25 +49,13 @@ class QuestionsController extends Controller {
 
 	public function getCategories(Request $request)
 	{
+		// @TODO later return categories related to selected language
 		$language = $request->get('language');
-		if ('php' === $language) {
-			$categories = [
-				'LAMP',
-				'Apache',
-				'Nginx',
-				'None',
-				'NoSQL',
-			];
-		} else {
-			$categories = [
-				'Math',
-				'Patterns',
-				'Programming',
-				'Perl',
-				'Other',
-			];
-		}
-		return response()->json($categories);
+		$categories = iterator_to_array(Category::all());
+		$categoryNames = array_map(function(Category $category) {
+			return $category->getName();
+		}, $categories);
+		return response()->json($categoryNames);
 	}
 
 	private function getAnswerModels(Question $question)

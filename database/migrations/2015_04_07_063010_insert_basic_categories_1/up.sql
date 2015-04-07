@@ -1,0 +1,18 @@
+INSERT INTO categories ("name") VALUES
+('Syntax'),
+('Data types'),
+('Binary arithmetic'),
+('OOP'),
+('Exceptions'),
+('Generators'),
+('Sessions'),
+('GC'),
+('CLI'),
+('DB'),
+('HTTP'),
+('Network'),
+('Design patterns'),
+('Arrays'),
+('Language versions'),
+('Regular expressions'),
+('Security');

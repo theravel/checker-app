@@ -4,7 +4,7 @@ use DB;
 
 use Forestest\Models\Category;
 
-class Categories {
+class CategoriesRepository {
 
 	public function getOrCreateIds(array $categoryNames)
 	{

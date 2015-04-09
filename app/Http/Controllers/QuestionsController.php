@@ -8,7 +8,8 @@ use Forestest\Models\Question;
 use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
-use Forestest\Repositories\Categories;
+use Forestest\Repositories\QuestionsRepository;
+use Forestest\Repositories\CategoriesRepository;
 use Forestest\Exceptions\ValidationException;
 
 class QuestionsController extends Controller {
@@ -45,8 +46,11 @@ class QuestionsController extends Controller {
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
 		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
-		$question->saveWithAnswers($this->getAnswerModels($question));
-		$this->attachCategories($question);
+		$repository = new QuestionsRepository();
+		$repository->to($question)
+			->attach('answers', $this->getAnswerModels($question))
+			->attach('categories', $this->getCategoriesIds($question))
+			->save();
 	}
 
 	public function getCategories(Request $request)
@@ -95,17 +99,14 @@ class QuestionsController extends Controller {
 		return $answersCorrect[$questionType][$answerIndex];
 	}
 
-	private function attachCategories(Question $question)
+	private function getCategoriesIds(Question $question)
 	{
 		$categoryNames = Input::get('categories', []);
 		if (!is_array($categoryNames)) {
 			throw new ValidationException('Categories have invalid format');
 		}
-		$repository = new Categories();
-		$categoriesIds = $repository->getOrCreateIds($categoryNames);
-		if (!empty($categoriesIds)) {
-			$question->categories()->attach($categoriesIds);
-		}
+		$repository = new CategoriesRepository();
+		return $repository->getOrCreateIds($categoryNames);
 	}
 
 }

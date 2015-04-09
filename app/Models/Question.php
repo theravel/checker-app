@@ -34,19 +34,6 @@ class Question extends TranslationAwareModel {
 		return Translation::ENTITY_TYPE_QUESTION;
 	}
 
-	/**
-	 * @param Forestest\Models\Answer[] $answers
-	 */
-	public function saveWithAnswers(array $answers)
-	{
-		$this->validateAnswers($answers);
-		$self = $this;
-		DB::transaction(function() use ($self, $answers) {
-			$self->save();
-			$self->answers()->saveMany($answers);
-		});
-	}
-
 	public static function getTypes()
 	{
 		// @TODO refactor, add languages support
@@ -69,29 +56,6 @@ class Question extends TranslationAwareModel {
 			self::TYPE_SINGLE_LINE,
 			self::TYPE_MULTI_LINE,
 		];
-	}
-
-	/**
-	 * @return Forestest\Models\Answer[] $answers
-	 */
-	private function validateAnswers(array $answers)
-	{
-		if (in_array($this->getType(), self::getTypesWithoutAnswers())) {
-			return;
-		}
-		if (count($answers) < 2) {
-			throw new ValidationException('At least two answers must exist');
-		}
-		$correctAnswerExist = false;
-		foreach ($answers as $answer) {
-			if ($answer->getIsCorrect()) {
-				$correctAnswerExist = true;
-				break;
-			}
-		}
-		if (!$correctAnswerExist) {
-			throw new ValidationException('At least one answer must be flagged as correct');
-		}
 	}
 
 	/*** getters ***/
@@ -123,7 +87,7 @@ class Question extends TranslationAwareModel {
 	}
 
 	/**
-	 * @param int $id
+	 * @param string $type
 	 * @throws \Forestest\Exceptions\ValidationException
 	 */
 	public function setType($type)

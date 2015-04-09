@@ -157,7 +157,8 @@ Question text...
 					</div>
 				</div>
 
-				<button type="submit" class="btn btn-primary pull-right">
+				<button type="submit" class="btn btn-primary pull-right btn-spinner">
+					<i class="glyphicon glyphicon-refresh glyphicon-spin"></i>
 					Submit new question
 				</button>
 			</form>

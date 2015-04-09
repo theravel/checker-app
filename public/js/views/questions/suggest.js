@@ -194,10 +194,14 @@ require([
 		valid &= validationCheck.emptyAnswer();
 		valid &= validationCheck.noCorrect();
 		if (valid) {
+			var button = $(this).addClass('processing');
 			$.ajax({
 				url: '/questions/suggest',
 				type: 'POST',
-				data: $(this).serialize()
+				data: $(this).serialize(),
+				complete: function() {
+					button.removeClass('processing');
+				}
 			});
 		} else {
 			$('html, body').animate({scrollTop: 0}, 300);

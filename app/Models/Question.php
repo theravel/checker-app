@@ -79,6 +79,11 @@ class Question extends TranslationAwareModel {
 		return $this->categories;
 	}
 
+	public function getAnswers()
+	{
+		return $this->answers;
+	}
+
 	/*** setters ***/
 
 	public function setId($id)

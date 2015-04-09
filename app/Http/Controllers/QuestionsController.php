@@ -31,9 +31,13 @@ class QuestionsController extends Controller {
 			->share('pageJs', "$controller/$action");
 	}
 
-	public function getPreview()
+	public function getPreview($id)
 	{
-		return view('questions/preview', []);
+		$question = Question::findOrFail($id);
+		return view('questions/preview', [
+			'language' => Translation::LANGUAGE_DEFAULT,
+			'question' => $question,
+		]);
 	}
 
 	public function getSuggest()

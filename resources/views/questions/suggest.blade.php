@@ -22,6 +22,9 @@
 					<div class="alert alert-danger hidden" id="error-no-correct">
 						At least one answer must be flagged as correct
 					</div>
+					<div class="alert alert-danger hidden" id="error-server">
+						Cannot save question because of internal error
+					</div>
 				</div>
 				<input type="hidden" name="_token" value="<?=Session::token()?>" />
 				<div class="row">

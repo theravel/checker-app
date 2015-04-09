@@ -140,7 +140,8 @@ require([
 			emptyText: $('#error-empty-text'),
 			noAnswers: $('#error-no-answers'),
 			emptyAnswer: $('#error-empty-answer'),
-			noCorrect: $('#error-no-correct')
+			noCorrect: $('#error-no-correct'),
+			server: $('#error-server')
 		},
 		validationCheck = {
 			emptyText: function() {
@@ -199,6 +200,12 @@ require([
 				url: '/questions/suggest',
 				type: 'POST',
 				data: $(this).serialize(),
+				success: function(data) {
+					window.location = '/questions/preview/' + data.id;
+				},
+				error: function() {
+					jErrorMessages.server.removeClass('hidden');
+				},
 				complete: function() {
 					button.removeClass('processing');
 				}

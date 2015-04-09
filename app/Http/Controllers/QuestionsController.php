@@ -31,6 +31,11 @@ class QuestionsController extends Controller {
 			->share('pageJs', "$controller/$action");
 	}
 
+	public function getPreview()
+	{
+		return view('questions/preview', []);
+	}
+
 	public function getSuggest()
 	{
 		return view('questions/suggest', [
@@ -51,6 +56,7 @@ class QuestionsController extends Controller {
 			->attach('answers', $this->getAnswerModels($question))
 			->attach('categories', $this->getCategoriesIds($question))
 			->save();
+		return response()->json(['id' => $question->getId()]);
 	}
 
 	public function getCategories(Request $request)

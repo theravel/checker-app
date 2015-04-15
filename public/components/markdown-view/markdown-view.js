@@ -12,6 +12,11 @@ define([
 				html: 'xml'
 			},
 
+			init = function() {
+				setDefaultLanguage(jViewPanel.data('lang'));
+				setValue(jViewPanel.html());
+			},
+
 			setDefaultLanguage = function(lang) {
 				defaultLanguage = lang;
 			},
@@ -39,6 +44,8 @@ define([
 					code;
 			}
 		});
+
+		init();
 
 		this.setValue = setValue;
 		this.setDefaultLanguage = setDefaultLanguage;

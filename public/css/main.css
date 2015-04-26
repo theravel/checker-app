@@ -75,3 +75,24 @@
 .processing .glyphicon-spin {
     display: inline-block;
 }
+.question-suggest #markdown-view {
+    padding-left: 20px;
+}
+.answers-preview {
+    border-top: 1px solid #ddd;
+    padding: 20px 10px 0 10px;
+}
+.answer-input {
+    width: 100%;
+}
+textarea.answer-input {
+    height: 80px;
+}
+.answers-list {
+    margin: 0;
+    padding: 0;
+}
+.answers-list li {
+    list-style-type: none;
+    padding: 2px 0;
+}

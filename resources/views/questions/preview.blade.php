@@ -2,36 +2,57 @@
 
 @section('content')
 <div class="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">Question preview</div>
+	<div class="panel panel-default question-preview">
+		<div class="panel-heading">
+			Question preview mode
+			<a class="pull-right" href="/questions/edit/{{ $question->getId() }}">
+				Edit
+			</a>
+		</div>
 		<div class="panel-body">
-			<pre id="markdown-view"
-				 data-lang="<?= $question->getProgramLanguage()->getHighlightAlias() ?>"
-				 data-value="{{ $question->getTranslation($language) }}">
-			</pre>
-			<?php switch ($question->getType()) {
-				case 1: ?>
-					<input />
-				<?php break; 
-				case 2: ?>
-					<textarea></textarea>
-				<?php break; 
-				case 3:
-				case 4:
-					$inputType = (3 === $question->getType()) ? 'radio' : 'checkbox';
-					foreach ($question->getAnswers() as $answer) { ?>
-						<div>
-							<input type="<?=$inputType?>"
-								   name="answers"
-								   value="<?=$answer->getId()?>"
-								   id="answer<?=$answer->getId()?>" />
-							<label for="answer<?=$answer->getId()?>">
-								<?= $answer->getTranslation($language) ?>
+			@if (Session::has('suggestSuccess'))
+				<div class="alert alert-success">
+					<p>
+						Thank you for contribution!
+						The question was successfully created, you can see it below.
+					</p>
+					<p>
+						Please note that every change is reviewed by moderators,
+						so it can take some time for publication.
+					</p>
+				</div>
+			@endif
+			<div id="markdown-view"
+				 data-lang="{{ $question->getProgramLanguage()->getHighlightAlias() }}"
+				 data-value="{{{ $question->getTranslation($language) }}}">
+			</div>
+			<div class="answers-preview">
+				@if (1 === $question->getType())
+					<input class="form-control answer-input"
+						   disabled="disabled"
+						   value="Answer..." />
+				@elseif (2 === $question->getType())
+					<textarea class="form-control answer-input"
+							  disabled="disabled">Answer...
+					</textarea>
+				@else
+					<?php $inputType = (3 === $question->getType()) ? 'radio' : 'checkbox'; ?>
+					<ul class="answers-list">
+					@foreach ($question->getAnswers() as $answer)
+						<li class="{{ $inputType }}">
+							<label>
+								<input type="{{ $inputType }}"
+									   disabled="disabled"
+									   name="answers"
+									   value="{{ $answer->getId() }}"
+									   id="answer{{ $answer->getId() }}" />
+								{{{ $answer->getTranslation($language) }}}
 							</label>
-						</div>
-					<?php } ?>
-				<?php break; ?>
-			<?php } ?>
+						</li>
+					@endforeach
+					</ul>
+				@endif
+			</div>
 		</div>
 	</div>
 </div>

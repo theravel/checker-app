@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Input;
+use Session;
 
 use Forestest\Models\Answer;
 use Forestest\Models\Question;
@@ -60,6 +61,7 @@ class QuestionsController extends Controller {
 			->attach('answers', $this->getAnswerModels($question))
 			->attach('categories', $this->getCategoriesIds($question))
 			->save();
+		Session::flash('suggestSuccess', true);
 		return response()->json(['id' => $question->getId()]);
 	}
 

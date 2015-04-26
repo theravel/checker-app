@@ -6,8 +6,8 @@
 		<div class="panel-heading">Question preview</div>
 		<div class="panel-body">
 			<pre id="markdown-view"
-				 data-lang="<?= $question->getProgramLanguage()->getHighlightAlias() ?>">
-<?= $question->getTranslation($language) ?>
+				 data-lang="<?= $question->getProgramLanguage()->getHighlightAlias() ?>"
+				 data-value="{{ $question->getTranslation($language) }}">
 			</pre>
 			<?php switch ($question->getType()) {
 				case 1: ?>

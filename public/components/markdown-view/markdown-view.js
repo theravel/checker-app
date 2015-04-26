@@ -14,7 +14,11 @@ define([
 
 			init = function() {
 				setDefaultLanguage(jViewPanel.data('lang'));
-				setValue(jViewPanel.html());
+				try {
+					setValue(jViewPanel.data('value'));
+				} catch (e) {
+					// data-vale attribute is not defined
+				}
 			},
 
 			setDefaultLanguage = function(lang) {
@@ -22,6 +26,9 @@ define([
 			},
 
 			setValue = function(value) {
+				if (typeof value !== 'string') {
+					throw 'Invalid value';
+				}
 				var equation = value.replace(/<equation>((.*?\n)*?.*?)<\/equation>/ig, function(a, b){
 					return '<img src="http://latex.codecogs.comp/ng.latex?' + encodeURIComponent(b) + '" />';
 				});
@@ -30,6 +37,7 @@ define([
 		;
 
 		marked.setOptions({
+			sanitize: true,
 			highlight: function(code, lang){
 				if (!lang) {
 					lang = defaultLanguage;

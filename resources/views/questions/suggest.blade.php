@@ -31,12 +31,12 @@
 						<div class="form-group">
 							<label for="usr">Answer type</label>
 							<select class="form-control" id="question-type" name="questionType">
-								<?php foreach ($questionTypes as $id => $text) { ?>
-									<option value="<?=$id?>"
-											<?= ($id === $activeQuestionType) ? 'selected="selected"' : ''?>>
-										<?=$text?>
+								@foreach ($questionTypes as $id => $text)
+									<option value="{{ $id }}"
+											{{ ($id === $activeQuestionType) ? 'selected="selected"' : '' }}>
+										{{ $text }}
 									</option>
-								<?php } ?>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -45,13 +45,13 @@
 						<div class="form-group">
 							<label for="usr">Programming language</label>
 							<select class="form-control" id="question-program-lang" name="programLanguage">
-								<?php foreach ($programLanguages as $programLanguage) { ?>
-									<option value="<?= $programLanguage->getId() ?>"
-											data-highlight="<?= $programLanguage->getHighlightAlias() ?>"
-											<?= $programLanguage->isDefaultSelected() ? 'selected="selected"' : '' ?>>
-										<?= $programLanguage->getName() ?>
+								@foreach ($programLanguages as $programLanguage)
+									<option value="{{ $programLanguage->getId() }}"
+											data-highlight="{{ $programLanguage->getHighlightAlias() }}"
+											{{ $programLanguage->isDefaultSelected() ? 'selected="selected"' : '' }}>
+										{{ $programLanguage->getName() }}
 									</option>
-								<?php } ?>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -133,29 +133,30 @@ Question text...
 							<span class="glyphicon glyphicon-ok-circle answer-correct-ok"></span>
 						</div>
 						<div class="clear"></div>
-						<?php foreach([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType) { ?>
-							<div id="active-answers-<?=$typeId?>" class="active-answers-area <?= ($activeQuestionType === $typeId) ?: 'hidden'; ?>">
-								<?php foreach(['answer-template', '', ''] as $index => $className) { ?>
-									<div class="input-group answer-wrapper <?=$className?>">
+						@foreach ([3 => 'radio', 4 => 'checkbox'] as $typeId => $inputType)
+							<div id="active-answers-{{ $typeId }}"
+								 class="active-answers-area {{ ($activeQuestionType === $typeId) ?: 'hidden' }}">
+								@foreach (['answer-template', '', ''] as $index => $className)
+									<div class="input-group answer-wrapper {{ $className }}">
 										<span class="input-group-addon answer-correct-toggle answer-correct-wrong">
 											<label class="glyphicon glyphicon-remove-circle"></label>
-											<input type="<?=$inputType?>" class="correct-switch" />
+											<input type="{{ $inputType }}" class="correct-switch" />
 											<input type="hidden"
 												   class="correct-switch-value"
-												   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answersCorrect[<?=$typeId?>][]"
+												   {{ (0 === $index) ? 'data-name' : 'name' }}="answersCorrect[{{ $typeId }}][]"
 												   value="0" />
 										</span>
 										<input type="text" class="form-control answer-text"
-											   <?= (0 === $index) ? 'data-name' : 'name'; ?>="answers[<?=$typeId?>][]" />
+											   {{ (0 === $index) ? 'data-name' : 'name' }}="answers[{{ $typeId }}][]" />
 										<span class="input-group-btn">
 											<button class="btn btn-default answer-remove" type="button">
 												Remove
 											</button>
 										</span>
 									</div>
-								<?php } ?>
+								@endforeach
 							</div>
-						<?php } ?>
+						@endforeach
 					</div>
 				</div>
 

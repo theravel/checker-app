@@ -8,9 +8,9 @@
 
 	<link href="/css/app.css" rel="stylesheet">
 	<link href="/css/main.css" rel="stylesheet">
-	<?php foreach ($pageCss as $cssFile) { ?>
-		<link href="<?=$cssFile?>" rel="stylesheet" >
-	<?php } ?>
+	@foreach ($pageCss as $cssFile)
+		<link href="{{ $cssFile }}" rel="stylesheet" >
+	@endforeach
 
 	<!-- Fonts -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -63,6 +63,6 @@
 	<!-- Scripts -->
 	<script src="/vendor/js/require-2.1.16.min.js"></script>
 	<script src="/js/main.js"></script>
-	<script src="/js/views/<?=$pageJs?>.js"></script>
+	<script src="/js/views/{{ $pageJs }}.js"></script>
 </body>
 </html>

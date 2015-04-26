@@ -69,6 +69,7 @@ class QuestionsController extends Controller {
 	{
 		// @TODO later return categories related to selected language
 		$language = $request->get('language');
+		// @TODO return only moderated categories
 		$categories = iterator_to_array(Category::all());
 		$categoryNames = array_map(function(Category $category) {
 			return $category->getName();

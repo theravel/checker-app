@@ -9,7 +9,8 @@ require([
 	var TYPE_SINGLE_LINE = 1,
 		TYPE_MULTI_LINE = 2,
 		TYPE_RADIOS = 3,
-		TYPE_CHECKBOXES = 4;
+		TYPE_CHECKBOXES = 4,
+		MAX_AUTOCOMPLETE_ITEMS = 10;
 
 	var preview = new MarkdownView(),
 		editor = new MarkdownEditor(preview),
@@ -49,13 +50,16 @@ require([
 		placeholderText: $('#t-categories-placeholder').text(),
 		autocomplete: {
 			source: function(request, response) {
-				var term = request.term.toLowerCase(),
+				var term = $.trim(request.term.toLowerCase()),
 					matches = [];
 
 				for (var i = 0; i < categoriesAutocomplete.length; i++) {
 					var name = categoriesAutocomplete[i].toLowerCase();
 					if (0 === name.indexOf(term)) {
 						matches.push(categoriesAutocomplete[i]);
+						if (matches.length === MAX_AUTOCOMPLETE_ITEMS) {
+							break;
+						}
 					}
 				}
 				response(matches);

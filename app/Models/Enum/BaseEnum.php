@@ -6,6 +6,9 @@ abstract class BaseEnum {
 
 	abstract public function getAll();
 
+	/**
+	 * @throws \Forestest\Exceptions\ValidationException
+	 */
 	public static function validate($value)
 	{
 		$instance = new static();

@@ -1,6 +1,6 @@
 <?php namespace Forestest\Repositories;
 
-use Forestest\Models\Question;
+use Forestest\Models\Enum\QuestionType;
 use Forestest\Exceptions\ValidationException;
 use Forestest\Repositories\Base\FluentRelationsRepository;
 
@@ -11,7 +11,7 @@ class QuestionsRepository extends FluentRelationsRepository {
 		$question = $this->getObject();
 		$answers = $this->getAttached('answers', []);
 		$categoriesIds = $this->getAttached('categoriesIds', []);
-		if (!in_array($question->getType(), Question::getTypesWithoutAnswers())) {
+		if (!in_array($question->getType(), QuestionType::getTypesWithoutAnswers())) {
 			$this->validateAnswers($answers);
 		}
 		$this->saveRelated(function() use ($question, $answers, $categoriesIds) {

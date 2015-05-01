@@ -2,19 +2,14 @@
 
 use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Enum\EntityType;
+use Forestest\Models\Enum\QuestionType;
 use Forestest\Models\Traits\ModerationAwareTrait;
 use Forestest\Models\Traits\TranslationAwareTrait;
-use Forestest\Exceptions\ValidationException;
 
 class Question extends BaseModel {
 
 	use TranslationAwareTrait,
 		ModerationAwareTrait;
-
-	const TYPE_SINGLE_LINE = 1;
-	const TYPE_MULTI_LINE = 2;
-	const TYPE_RADIOS = 3;
-	const TYPE_CHECKBOXES = 4;
 
 	/*** relations ***/
 	public function programLanguage()
@@ -48,23 +43,10 @@ class Question extends BaseModel {
 	{
 		// @TODO refactor, add languages support
 		return [
-			self::TYPE_SINGLE_LINE => 'Single line text',
-			self::TYPE_MULTI_LINE => 'Multi-line text',
-			self::TYPE_RADIOS => 'Pick one',
-			self::TYPE_CHECKBOXES => 'Check all that apply',
-		];
-	}
-
-	/**
-	 * Such question types cannot have answers
-	 *
-	 * @return array
-	 */
-	public static function getTypesWithoutAnswers()
-	{
-		return [
-			self::TYPE_SINGLE_LINE,
-			self::TYPE_MULTI_LINE,
+			QuestionType::TYPE_SINGLE_LINE => 'Single line text',
+			QuestionType::TYPE_MULTI_LINE => 'Multi-line text',
+			QuestionType::TYPE_RADIOS => 'Pick one',
+			QuestionType::TYPE_CHECKBOXES => 'Check all that apply',
 		];
 	}
 
@@ -107,9 +89,7 @@ class Question extends BaseModel {
 	 */
 	public function setType($type)
 	{
-		if (!in_array($type, array_keys(self::getTypes()))) {
-			throw new ValidationException('Question type is invalid');
-		}
+		QuestionType::validate($type);
 		$this->attributes['type'] = $type;
 	}
 

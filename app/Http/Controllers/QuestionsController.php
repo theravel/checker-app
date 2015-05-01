@@ -9,6 +9,7 @@ use Forestest\Models\Question;
 use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
+use Forestest\Models\Enum\QuestionType;
 use Forestest\Models\Enum\ModerationStatus;
 use Forestest\Repositories\QuestionsRepository;
 use Forestest\Repositories\CategoriesRepository;
@@ -47,7 +48,7 @@ class QuestionsController extends Controller {
 		return view('questions/suggest', [
 			'programLanguages' => ProgramLanguage::allOrdered()->get(),
 			'questionTypes' => Question::getTypes(),
-			'activeQuestionType' => Question::TYPE_RADIOS,
+			'activeQuestionType' => QuestionType::TYPE_RADIOS,
 		]);
 	}
 
@@ -80,7 +81,7 @@ class QuestionsController extends Controller {
 	private function getAnswerModels(Question $question)
 	{
 		$result = [];
-		if (in_array($question->getType(), Question::getTypesWithoutAnswers())) {
+		if (in_array($question->getType(), QuestionType::getTypesWithoutAnswers())) {
 			return $result;
 		}
 		foreach ($this->getAnswersInput($question) as $index => $answerText) {

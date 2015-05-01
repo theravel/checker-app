@@ -35,7 +35,7 @@ trait ModerationAwareTrait {
 	/*** setters ***/
 	public function setModerationStatus($moderationStatus)
 	{
-		ModerationStatus::validateStatus($moderationStatus);
+		ModerationStatus::validate($moderationStatus);
 		$this->attributes['moderation_status'] = $moderationStatus;
 	}
 

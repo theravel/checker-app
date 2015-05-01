@@ -51,7 +51,7 @@ class Translation extends BaseModel {
 
 	public function setEntityType($entityType)
 	{
-		EntityType::validateType($entityType);
+		EntityType::validate($entityType);
 		$this->attributes['entity_type'] = $entityType;
 	}
 

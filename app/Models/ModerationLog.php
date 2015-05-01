@@ -40,13 +40,13 @@ class ModerationLog extends BaseModel {
 
 	public function setEntityType($entityType)
 	{
-		EntityType::validateType($entityType);
+		EntityType::validate($entityType);
 		$this->attributes['entity_type'] = $entityType;
 	}
 
 	public function setModerationStatus($moderationStatus)
 	{
-		ModerationStatus::validateStatus($moderationStatus);
+		ModerationStatus::validate($moderationStatus);
 		$this->attributes['moderation_status'] = $moderationStatus;
 	}
 

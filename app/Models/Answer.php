@@ -1,15 +1,26 @@
 <?php namespace Forestest\Models;
 
 use Forestest\Models\Translation;
-use Forestest\Models\Base\TranslationAwareModel;
+use Forestest\Models\Base\BaseModel;
+use Forestest\Models\Enum\EntityType;
+use Forestest\Models\Traits\TranslationAwareTrait;
 
-class Answer extends TranslationAwareModel {
+class Answer extends BaseModel {
+
+	use TranslationAwareTrait;
 
 	public $timestamps = false;
 
 	/*** methods ***/
-	public function getTranslationType() {
-		return Translation::ENTITY_TYPE_ANSWER;
+	public function save(array $options = array())
+	{
+		parent::save($options);
+		$this->saveTranslations();
+	}
+
+	public function getEntityType()
+	{
+		return EntityType::ENTITY_ANSWER;
 	}
 
 	/*** getters ***/

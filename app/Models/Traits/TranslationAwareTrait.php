@@ -1,13 +1,14 @@
-<?php namespace Forestest\Models\Base;
+<?php namespace Forestest\Models\Traits;
 
-use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Translation;
 use Forestest\Models\Traits\CacheAwareTrait;
+use Forestest\Models\Traits\EntityDependentTrait;
 use Forestest\Exceptions\ValidationException;
 
-abstract class TranslationAwareModel extends BaseModel {
+trait TranslationAwareTrait {
 
-	use CacheAwareTrait;
+	use CacheAwareTrait,
+		EntityDependentTrait;
 
 	/**
 	 * @var \Forestest\Models\Translation[]
@@ -19,14 +20,14 @@ abstract class TranslationAwareModel extends BaseModel {
 		if (!strlen(trim($text))) {
 			throw new ValidationException(sprintf(
 				'Translation text is empty [%s] [%s]',
-				$this->getTranslationType(), $language
+				$this->getEntityType(), $language
 			));
 		}
 		if (!isset($this->translations[$language])) {
 			$this->translations[$language] = new Translation();
 		}
 		$translation = $this->translations[$language];
-		$translation->setEntityType($this->getTranslationType());
+		$translation->setEntityType($this->getEntityType());
 		$translation->setLanguage($language);
 		$translation->setText($text);
 	}
@@ -37,7 +38,7 @@ abstract class TranslationAwareModel extends BaseModel {
 		$text = $this->getCache($key);
 		if (null === $text) {
 			$translation = Translation::where('entity_id', '=', $this->getId())
-				->where('entity_type', $this->getTranslationType())
+				->where('entity_type', $this->getEntityType())
 				->where('language', '=', $language)
 				->firstOrFail();
 			$text = $translation->getText();
@@ -46,9 +47,8 @@ abstract class TranslationAwareModel extends BaseModel {
 		return $text;
 	}
 
-	public function save(array $options = array())
+	public function saveTranslations()
 	{
-		parent::save($options);
 		foreach ($this->translations as $translation) {
 			$translation->setEntityId($this->getId());
 			$translation->save();
@@ -57,15 +57,12 @@ abstract class TranslationAwareModel extends BaseModel {
 		}
 	}
 
-	abstract protected function getId();
-	abstract protected function getTranslationType();
-
 	private function getCacheKey($language)
 	{
 		return sprintf(
 			'translation_%s_%s_%s',
 			$this->getId(),
-			$this->getTranslationType(),
+			$this->getEntityType(),
 			$language
 		);
 	}

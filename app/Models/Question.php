@@ -1,12 +1,16 @@
 <?php namespace Forestest\Models;
 
-use DB;
-
 use Forestest\Models\Translation;
-use Forestest\Models\Base\TranslationAwareModel;
+use Forestest\Models\Base\BaseModel;
+use Forestest\Models\Enum\EntityType;
+use Forestest\Models\Traits\ModerationAwareTrait;
+use Forestest\Models\Traits\TranslationAwareTrait;
 use Forestest\Exceptions\ValidationException;
 
-class Question extends TranslationAwareModel {
+class Question extends BaseModel {
+
+	use TranslationAwareTrait,
+		ModerationAwareTrait;
 
 	const TYPE_SINGLE_LINE = 1;
 	const TYPE_MULTI_LINE = 2;
@@ -30,8 +34,15 @@ class Question extends TranslationAwareModel {
 	}
 
 	/*** methods ***/
-	public function getTranslationType() {
-		return Translation::ENTITY_TYPE_QUESTION;
+	public function save(array $options = array())
+	{
+		parent::save($options);
+		$this->saveTranslations();
+		$this->saveModerationLog();
+	}
+
+	public function getEntityType() {
+		return EntityType::ENTITY_QUESTION;
 	}
 
 	public static function getTypes()

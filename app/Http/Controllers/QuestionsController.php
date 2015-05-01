@@ -9,6 +9,7 @@ use Forestest\Models\Question;
 use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
+use Forestest\Models\Enum\ModerationStatus;
 use Forestest\Repositories\QuestionsRepository;
 use Forestest\Repositories\CategoriesRepository;
 use Forestest\Exceptions\ValidationException;
@@ -55,6 +56,7 @@ class QuestionsController extends Controller {
 		$question = new Question();
 		$question->setType($request->get('questionType'));
 		$question->setProgramLanguageId($request->get('programLanguage'));
+		$question->setModerationStatus(ModerationStatus::STATUS_PENDING);
 		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
 		$repository = new QuestionsRepository();
 		$repository->to($question)

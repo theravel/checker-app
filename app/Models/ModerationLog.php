@@ -2,15 +2,9 @@
 
 use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Enum\EntityType;
+use Forestest\Models\Enum\ModerationStatus;
 
-class Translation extends BaseModel {
-
-	const LANGUAGE_DEFAULT = 'ru';
-
-	public $timestamps = false;
-
-	/*** scopes ***/
-	/**/
+class ModerationLog extends BaseModel {
 
 	/*** getters ***/
 	public function getId()
@@ -28,14 +22,9 @@ class Translation extends BaseModel {
 		return $this->attributes['entity_type'];
 	}
 
-	public function getLanguage()
+	public function getModerationStatus()
 	{
-		return $this->attributes['language'];
-	}
-
-	public function getText()
-	{
-		return $this->attributes['text'];
+		return $this->attributes['moderation_status'];
 	}
 
 	/*** setters ***/
@@ -55,14 +44,10 @@ class Translation extends BaseModel {
 		$this->attributes['entity_type'] = $entityType;
 	}
 
-	public function setLanguage($language)
+	public function setModerationStatus($moderationStatus)
 	{
-		$this->attributes['language'] = $language;
-	}
-
-	public function setText($text)
-	{
-		$this->attributes['text'] = $text;
+		ModerationStatus::validateStatus($moderationStatus);
+		$this->attributes['moderation_status'] = $moderationStatus;
 	}
 
 }

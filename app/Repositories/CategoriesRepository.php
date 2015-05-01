@@ -7,6 +7,13 @@ use Forestest\Models\Enum\ModerationStatus;
 
 class CategoriesRepository {
 
+	public function getAutocompleteValues($language)
+	{
+		// @TODO later return categories related to selected language
+		// @TODO allow PENDING categories for myself?
+		return Category::where('moderation_status', ModerationStatus::STATUS_APPROVED)->get();
+	}
+
 	public function getOrCreateIds(array $categoryNames)
 	{
 		$items = $this->findCaseInsensitive($categoryNames);

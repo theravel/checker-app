@@ -69,13 +69,11 @@ class QuestionsController extends Controller {
 
 	public function getCategories(Request $request)
 	{
-		// @TODO later return categories related to selected language
-		$language = $request->get('language');
-		// @TODO return only moderated categories
-		$categories = iterator_to_array(Category::all());
+		$repository = new CategoriesRepository();
+		$categories = $repository->getAutocompleteValues($request->get('language'));
 		$categoryNames = array_map(function(Category $category) {
 			return $category->getName();
-		}, $categories);
+		}, iterator_to_array($categories));
 		return response()->json($categoryNames);
 	}
 

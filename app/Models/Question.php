@@ -1,6 +1,5 @@
 <?php namespace Forestest\Models;
 
-use Forestest\Models\Translation;
 use Forestest\Models\Base\BaseModel;
 use Forestest\Models\Enum\EntityType;
 use Forestest\Models\Traits\ModerationAwareTrait;

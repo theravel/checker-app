@@ -3,6 +3,7 @@
 use DB;
 
 use Forestest\Models\Category;
+use Forestest\Models\Enum\ModerationStatus;
 
 class CategoriesRepository {
 
@@ -39,6 +40,7 @@ class CategoriesRepository {
 	{
 		$category = new Category();
 		$category->setName($name);
+		$category->setModerationStatus(ModerationStatus::STATUS_PENDING);
 		$category->save();
 		return $category->getId();
 	}

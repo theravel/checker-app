@@ -137,6 +137,11 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 
 		/*
+		 * Third-party
+		 */
+		'AdamWathan\EloquentOAuth\EloquentOAuthServiceProvider',
+
+		/*
 		 * Application Service Providers...
 		 */
 		'Forestest\Providers\AppServiceProvider',
@@ -192,6 +197,11 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
+		/*
+		 * Third-party
+		 */
+		'OAuth' => 'AdamWathan\EloquentOAuth\Facades\OAuth',
 
 	],
 

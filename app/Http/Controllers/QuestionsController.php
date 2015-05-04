@@ -17,22 +17,14 @@ use Forestest\Exceptions\ValidationException;
 
 class QuestionsController extends Controller {
 
-	public function __construct()
-	{
-		$uri = static::getRouter()->getCurrentRoute()->getUri();
-		list($controller, $action) = explode('/', $uri);
-		app('Illuminate\Contracts\View\Factory')
-			->share('pageCss', [
-				'/vendor/components/codemirror-5.0/lib/codemirror.css',
-				'/vendor/components/highlight-8.4/styles/default.css',
-				'/vendor/components/jquery-ui-1.11.3/jquery-ui.min.css',
-				'/vendor/components/tagit-2.0/jquery.tagit.css',
-				'/components/markdown-editor/markdown-editor.css',
-				'/components/markdown-view/markdown-view.css',
-			]);
-		app('Illuminate\Contracts\View\Factory')
-			->share('pageJs', "$controller/$action");
-	}
+	protected $pageCss = [
+		'/vendor/components/codemirror-5.0/lib/codemirror.css',
+		'/vendor/components/highlight-8.4/styles/default.css',
+		'/vendor/components/jquery-ui-1.11.3/jquery-ui.min.css',
+		'/vendor/components/tagit-2.0/jquery.tagit.css',
+		'/components/markdown-editor/markdown-editor.css',
+		'/components/markdown-view/markdown-view.css',
+	];
 
 	public function getPreview($id)
 	{

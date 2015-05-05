@@ -3,26 +3,31 @@
 use Auth;
 use OAuth;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+use Forestest\User;
 use Forestest\Http\Controllers\Controller;
 
 class OAuthController extends Controller {
 
 	public function getAuth($provider)
 	{
-		return OAuth::authorize('github');
+		return OAuth::authorize($provider);
 	}
 
 	public function getLogin($provider)
 	{
-		OAuth::login($provider, function(&$user, $details) {
-			$user->name = '';
-			$user->email = '';
-			$user->password = '';
+		OAuth::login($provider, function(User &$user, $details) {
+			try {
+				$user = User::where('email', '=', $details->email)->firstOrFail();
+			} catch (ModelNotFoundException $e) {
+				$user->name = $details->nickname;
+				$user->email = $details->email;
+				$user->image_url = $details->imageUrl;
+			}
 		});
-
-		// Current user is now available via Auth facade
-		$user = Auth::user();
-		//return Redirect::intended();
+		// $user = Auth::user();
+		// @TODO redirect
 	}
 
 }

@@ -9,12 +9,12 @@ return [
 //			'redirect' => 'https://example.com/your/facebook/redirect',
 //			'scope' => [],
 //		],
-//		'google' => [
-//			'id' => '12345678',
-//			'secret' => 'y0ur53cr374ppk3y',
-//			'redirect' => 'https://example.com/your/google/redirect',
-//			'scope' => [],
-//		],
+		'google' => [
+			'id' => env('OAUTH_GOOGLE_ID'),
+			'secret' => env('OAUTH_GOOGLE_SECRET'),
+			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/oauth/login/google',
+			'scope' => [],
+		],
 		'github' => [
 			'id' => env('OAUTH_GITHUB_ID'),
 			'secret' => env('OAUTH_GITHUB_SECRET'),

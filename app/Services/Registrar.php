@@ -1,6 +1,6 @@
 <?php namespace Forestest\Services;
 
-use Forestest\User;
+use Forestest\Models\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 

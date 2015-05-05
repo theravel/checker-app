@@ -5,7 +5,7 @@ use OAuth;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-use Forestest\User;
+use Forestest\Models\User;
 use Forestest\Http\Controllers\Controller;
 
 class OAuthController extends Controller {
@@ -21,9 +21,9 @@ class OAuthController extends Controller {
 			try {
 				$user = User::where('email', '=', $details->email)->firstOrFail();
 			} catch (ModelNotFoundException $e) {
-				$user->name = $details->nickname;
-				$user->email = $details->email;
-				$user->image_url = $details->imageUrl;
+				$user->setName($details->nickname);
+				$user->setEmail($details->email);
+				$user->setImageUrl($details->imageUrl);
 			}
 		});
 		// $user = Auth::user();

@@ -3,12 +3,27 @@
 use Auth;
 use OAuth;
 
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use Forestest\Models\User;
 use Forestest\Http\Controllers\Controller;
 
 class OAuthController extends Controller {
+
+	/**
+	 * @var \Illuminate\Contracts\Auth\Guard
+	 */
+	private $auth;
+
+	/**
+	 * @param  \Illuminate\Contracts\Auth\Guard $auth
+	 */
+	public function __construct(Guard $auth)
+	{
+		parent::__construct();
+		$this->auth = $auth;
+	}
 
 	public function getAuth($provider)
 	{
@@ -28,6 +43,12 @@ class OAuthController extends Controller {
 		});
 		// $user = Auth::user();
 		// @TODO redirect
+	}
+
+	public function getLogout()
+	{
+		$this->auth->logout();
+		return redirect('/');
 	}
 
 }

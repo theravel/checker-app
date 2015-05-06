@@ -18,7 +18,13 @@ abstract class Controller extends BaseController {
 	private function setStaticAssets()
 	{
 		$uri = static::getRouter()->getCurrentRoute()->getUri();
-		list($controller, $action) = explode('/', $uri);
+		$uriComponents = explode('/', $uri);
+		$controller = $uriComponents[0];
+		if (count($uriComponents) > 1) {
+			$action = $uriComponents[1];
+		} else {
+			$action = 'index';
+		}
 		view()->share('pageCss', $this->pageCss);
 		view()->share('pageJs', "$controller/$action");
 	}

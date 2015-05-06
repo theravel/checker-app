@@ -7,6 +7,11 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
+					<div class="login-social">
+						<a href="/oauth/auth/facebook" class="fa fa-facebook"></a>
+						<a href="/oauth/auth/github" class="fa fa-github"></a>
+						<a href="/oauth/auth/google" class="fa fa-google"></a>
+					</div>
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<strong>Whoops!</strong> There were some problems with your input.<br><br>

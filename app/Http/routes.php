@@ -11,12 +11,12 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
+Route::get('/', 'HomeController@getHome');
+Route::get('home', 'HomeController@getHome');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
 	'questions' => 'QuestionsController',
+	// #19 temporary disable
+	// 'password' => 'Auth\PasswordController',
 ]);

@@ -7,9 +7,9 @@ use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 use Forestest\Models\User;
-use Forestest\Http\Controllers\Controller;
+use Forestest\Http\Controllers\Base\BaseController;
 
-class AuthController extends Controller {
+class AuthController extends BaseController {
 
 	// #19 this functionality is temporary disabled
 	// use AuthenticatesAndRegistersUsers;

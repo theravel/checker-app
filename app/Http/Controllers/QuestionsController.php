@@ -14,8 +14,9 @@ use Forestest\Models\Enum\ModerationStatus;
 use Forestest\Repositories\QuestionsRepository;
 use Forestest\Repositories\CategoriesRepository;
 use Forestest\Exceptions\ValidationException;
+use Forestest\Http\Controllers\Base\BaseController;
 
-class QuestionsController extends Controller {
+class QuestionsController extends BaseController {
 
 	protected $pageCss = [
 		'/vendor/components/codemirror-5.0/lib/codemirror.css',

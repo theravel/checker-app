@@ -1,10 +1,10 @@
-<?php namespace Forestest\Http\Controllers;
+<?php namespace Forestest\Http\Controllers\Base;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesCommands;
-use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-abstract class Controller extends BaseController {
+abstract class BaseController extends Controller {
 
 	use DispatchesCommands, ValidatesRequests;
 

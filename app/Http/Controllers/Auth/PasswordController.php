@@ -1,11 +1,12 @@
 <?php namespace Forestest\Http\Controllers\Auth;
 
-use Forestest\Http\Controllers\Controller;
+use Forestest\Http\Controllers\Base\BaseController;
+
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
-class PasswordController extends Controller {
+class PasswordController extends BaseController {
 
 	/*
 	|--------------------------------------------------------------------------

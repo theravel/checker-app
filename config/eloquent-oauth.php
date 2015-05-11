@@ -12,13 +12,13 @@ return [
 		'google' => [
 			'id' => env('OAUTH_GOOGLE_ID'),
 			'secret' => env('OAUTH_GOOGLE_SECRET'),
-			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/oauth/login/google',
+			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/auth/oauth-login/google',
 			'scope' => [],
 		],
 		'github' => [
 			'id' => env('OAUTH_GITHUB_ID'),
 			'secret' => env('OAUTH_GITHUB_SECRET'),
-			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/oauth/login/github',
+			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/auth/oauth-login/github',
 			'scope' => [],
 		],
 //		'linkedin' => [

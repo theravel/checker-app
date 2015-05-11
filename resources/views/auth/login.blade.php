@@ -8,9 +8,9 @@
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">
 					<div class="login-social">
-						<a href="/oauth/auth/facebook" class="fa fa-facebook"></a>
-						<a href="/oauth/auth/github" class="fa fa-github"></a>
-						<a href="/oauth/auth/google" class="fa fa-google"></a>
+						<a href="/auth/oauth-redirect/facebook" class="fa fa-facebook"></a>
+						<a href="/auth/oauth-redirect/github" class="fa fa-github"></a>
+						<a href="/auth/oauth-redirect/google" class="fa fa-google"></a>
 					</div>
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">

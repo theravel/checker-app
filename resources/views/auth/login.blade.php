@@ -11,6 +11,7 @@
 						<a href="/auth/oauth-redirect/facebook" class="fa fa-facebook"></a>
 						<a href="/auth/oauth-redirect/github" class="fa fa-github"></a>
 						<a href="/auth/oauth-redirect/google" class="fa fa-google"></a>
+						<a href="/auth/oauth-redirect/vk" class="fa fa-vk"></a>
 					</div>
 					@if (count($errors) > 0)
 						<div class="alert alert-danger">

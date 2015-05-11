@@ -21,6 +21,12 @@ return [
 			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/auth/oauth-login/github',
 			'scope' => [],
 		],
+		'vk' => [
+			'id' => env('OAUTH_VK_ID'),
+			'secret' => env('OAUTH_VK_SECRET'),
+			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/auth/oauth-login/vk',
+			'scope' => [],
+		],
 //		'linkedin' => [
 //			'id' => '12345678',
 //			'secret' => 'y0ur53cr374ppk3y',

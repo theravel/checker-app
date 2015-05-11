@@ -139,7 +139,7 @@ return [
 		/*
 		 * Third-party
 		 */
-		'AdamWathan\EloquentOAuth\EloquentOAuthServiceProvider',
+		//
 
 		/*
 		 * Application Service Providers...
@@ -149,6 +149,7 @@ return [
 		'Forestest\Providers\ConfigServiceProvider',
 		'Forestest\Providers\EventServiceProvider',
 		'Forestest\Providers\RouteServiceProvider',
+		'Forestest\Providers\OauthServiceProvider',
 
 	],
 

@@ -97,12 +97,50 @@ textarea.answer-input {
     padding: 2px 0;
 }
 .login-social {
-	font-size: 40px;
+	font-size: 16px;
+	margin-top: 20px;
+}
+.login-social li {
+	list-style-type: none;
+	margin: 10px 0;
+}
+.login-social ul {
+	margin: 0;
+	padding: 0;
+}
+.login-social .fa {
+	font-size: 22px;
+	display: inline-block;
+	padding-right: 3px;
+	position: relative;
+	top: 1px;
 }
 .login-social a {
 	color: #ccc;
 	text-decoration: none;
+	position: relative;
+}
+.login-social .social-title {
+	border-bottom: 1px dashed #ccc;
 }
 .login-social a:hover {
-	color: #000;
+	color: #555;
+}
+.login-social a .fa-facebook {
+	top: 2px;
+}
+.login-social a .fa-google {
+	top: 3px;
+}
+.login-social a:hover .fa-facebook {
+	color: #3a5795;
+}
+.login-social a:hover .fa-vk {
+	color: #597DA3;
+}
+.login-social a:hover .fa-google {
+	color: #d73d32;
+}
+.login-social a:hover .fa-github {
+	color: #333;
 }

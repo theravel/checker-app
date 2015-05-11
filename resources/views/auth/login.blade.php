@@ -4,65 +4,37 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Login</div>
-				<div class="panel-body">
-					<div class="login-social">
-						<a href="/auth/oauth-redirect/facebook" class="fa fa-facebook"></a>
-						<a href="/auth/oauth-redirect/github" class="fa fa-github"></a>
-						<a href="/auth/oauth-redirect/google" class="fa fa-google"></a>
-						<a href="/auth/oauth-redirect/vk" class="fa fa-vk"></a>
-					</div>
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
-
-					<form class="form-horizontal" role="form" method="POST" action="/auth/login">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<div class="checkbox">
-									<label>
-										<input type="checkbox" name="remember"> Remember Me
-									</label>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary" style="margin-right: 15px;">
-									Login
-								</button>
-
-								<a href="/password/email">Forgot Your Password?</a>
-							</div>
-						</div>
-					</form>
-				</div>
+			<div class="login-social">
+				<p>Sign in using any of the following services:</p>
+				<ul>
+					<li>
+						<a href="/auth/oauth-redirect/facebook">
+							<span class="fa fa-facebook"></span>
+							<span class="social-title">Facebook</span>
+						</a>
+					</li>
+					<li>
+						<a href="/auth/oauth-redirect/google">
+							<span class="fa fa-google"></span>
+							<span class="social-title">Google</span>
+						</a>
+					</li>
+					<li>
+						<a href="/auth/oauth-redirect/github">
+							<span class="fa fa-github"></span>
+							<span class="social-title">Github</span>
+						</a>
+					</li>
+					<li>
+						<a href="/auth/oauth-redirect/vk">
+							<span class="fa fa-vk"></span>
+							<span class="social-title">Vkontakte</span>
+						</a>
+					</li>
+				</ul>
 			</div>
+
+			{{-- @include('auth/login_form') --}}
 		</div>
 	</div>
 </div>

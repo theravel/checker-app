@@ -1,6 +1,8 @@
 <?php namespace Forestest\Http\Controllers\Auth;
 
+use Log;
 use OAuth;
+use Session;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -49,6 +51,24 @@ class AuthController extends BaseController {
 
 	public function getOauthLogin($provider)
 	{
+		try {
+			$this->performOauthLogin($provider);
+			Session::flash('oauthSuccess', true);
+		} catch (\Exception $e) {
+			Session::flash('oauthError', true);
+			Log::error('Cannot perform OAuth login', ['ex' => $e]);
+		}
+		return redirect('/');
+	}
+
+	public function getLogout()
+	{
+		$this->auth->logout();
+		return redirect('/');
+	}
+
+	private function performOauthLogin($provider)
+	{
 		OAuth::login($provider, function(User &$user, $details) {
 			try {
 				$user = User::where('email', '=', $details->email)->firstOrFail();
@@ -60,13 +80,6 @@ class AuthController extends BaseController {
 				$user->setImageUrl($details->imageUrl);
 			}
 		});
-		return redirect('/');
-	}
-
-	public function getLogout()
-	{
-		$this->auth->logout();
-		return redirect('/');
 	}
 
 }

@@ -4,6 +4,7 @@ use OAuth;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 use Forestest\Models\User;
@@ -50,10 +51,9 @@ class AuthController extends BaseController {
 	{
 		OAuth::login($provider, function(User &$user, $details) {
 			try {
-				/**
-				 * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-				 */
 				$user = User::where('email', '=', $details->email)->firstOrFail();
+			} catch (ModelNotFoundException $e) {
+				// user does not exists, nothing to merge, just move on
 			} finally {
 				$user->setName($details->nickname);
 				$user->setEmail($details->email);

@@ -3,12 +3,12 @@
 return [
 	'table' => 'oauth_identities',
 	'providers' => [
-//		'facebook' => [
-//			'id' => '12345678',
-//			'secret' => 'y0ur53cr374ppk3y',
-//			'redirect' => 'https://example.com/your/facebook/redirect',
-//			'scope' => [],
-//		],
+		'facebook' => [
+			'id' => env('OAUTH_FACEBOOK_ID'),
+			'secret' => env('OAUTH_FACEBOOK_SECRET'),
+			'redirect' => env('PUBLIC_SCHEME') . '://' . env('PUBLIC_URL') . '/auth/oauth-login/facebook',
+			'scope' => [],
+		],
 		'google' => [
 			'id' => env('OAUTH_GOOGLE_ID'),
 			'secret' => env('OAUTH_GOOGLE_SECRET'),

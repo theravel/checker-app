@@ -61,6 +61,16 @@ class Question extends BaseModel {
 		return $this->attributes['type'];
 	}
 
+	public function getUserId()
+	{
+		return $this->attributes['user_id'];
+	}
+
+	public function getParentQuestionIds()
+	{
+		return $this->attributes['parent_question_ids'];
+	}
+
 	public function getProgramLanguage()
 	{
 		return $this->programLanguage;
@@ -81,6 +91,16 @@ class Question extends BaseModel {
 	public function setId($id)
 	{
 		$this->attributes['id'] = $id;
+	}
+
+	public function setUserId($userId)
+	{
+		$this->attributes['user_id'] = $userId;
+	}
+
+	public function setParentQuestionIds(array $questionIds)
+	{
+		$this->attributes['parent_question_ids'] = $questionIds;
 	}
 
 	/**

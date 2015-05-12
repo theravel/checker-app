@@ -33,6 +33,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	protected $hidden = ['password', 'remember_token'];
 
 	/*** getters ***/
+	public function getId()
+	{
+		return $this->attributes['id'];
+	}
+
 	public function getName()
 	{
 		return $this->attributes['name'];

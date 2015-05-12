@@ -1,5 +1,7 @@
 <?php namespace Forestest\Http\Controllers\Base;
 
+use Auth;
+
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,6 +15,16 @@ abstract class BaseController extends Controller {
 	public function __construct()
 	{
 		$this->setStaticAssets();
+	}
+
+	public function getUser()
+	{
+		return Auth::user();
+	}
+
+	public function hasUser()
+	{
+		return null !== $this->getUser();
 	}
 
 	private function setStaticAssets()

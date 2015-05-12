@@ -52,6 +52,7 @@ class QuestionsController extends BaseController {
 		$question->setProgramLanguageId($request->get('programLanguage'));
 		$question->setModerationStatus(ModerationStatus::STATUS_PENDING);
 		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
+		$question->setUserId($this->hasUser() ? $this->getUser()->getId() : null);
 		$repository = new QuestionsRepository();
 		$repository->to($question)
 			->attach('answers', $this->getAnswerModels($question))

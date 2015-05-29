@@ -103,15 +103,7 @@
 					</div>
 					<div class="panel-body">
 						<div id="editor-input">
-<textarea id="code" name="text">
-Code example:
-
-	function test(arg) {
-		console.log(arg, 42, 'string');
-	}
-
-Question text...
-</textarea>
+<textarea id="code" name="text">@if ($question) {{ $question->getTranslation($language) }} @else @include('questions/sample/text') @endif</textarea>
 								<div class="editor-hints">
 									Use <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a> 
 									syntax and indent source code for highlighting
@@ -122,7 +114,8 @@ Question text...
 					</div>
 				</div>
 
-				<div class="panel panel-default" id="question-answers-block">
+				<div id="question-answers-block"
+					 class="panel panel-default {{ in_array($activeQuestionType, $typesWithoutAnswers) ? 'hidden' : '' }}">
 					<div class="panel-heading">
 						<span>Answers</span>
 					</div>

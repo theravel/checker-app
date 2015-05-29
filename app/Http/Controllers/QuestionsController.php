@@ -38,13 +38,13 @@ class QuestionsController extends BaseController {
 
 	public function getSuggest()
 	{
-		return view('questions/suggest', [
-			'programLanguages' => ProgramLanguage::allOrdered()->get(),
-			'questionTypes' => Question::getTypes(),
-			'activeQuestionType' => QuestionType::DEFAULT_SELECTED,
-			'activeProgramLanguageId' => ProgramLanguage::DEFAULT_SELECTED,
-			'categories' => [],
-		]);
+		return view('questions/edit', $this->getQuestionViewData());
+	}
+
+	public function getEdit($id)
+	{
+		$question = Question::findOrFail($id);
+		return view('questions/edit', $this->getQuestionViewData($question));
 	}
 
 	public function postSuggest(Request $request)
@@ -72,6 +72,20 @@ class QuestionsController extends BaseController {
 			return $category->getName();
 		}, iterator_to_array($categories));
 		return response()->json($categoryNames);
+	}
+
+	private function getQuestionViewData(Question $question = null)
+	{
+		return [
+			'programLanguages' => ProgramLanguage::allOrdered()->get(),
+			'questionTypes' => Question::getTypes(),
+			'typesWithoutAnswers' => QuestionType::getTypesWithoutAnswers(),
+			'activeQuestionType' => $question ? $question->getType() : QuestionType::DEFAULT_SELECTED,
+			'activeProgramLanguageId' => $question ? $question->getProgramLanguageId() : ProgramLanguage::DEFAULT_SELECTED,
+			'categories' => $question ? $question->getCategories() : [],
+			'language' => Translation::LANGUAGE_DEFAULT,
+			'question' => $question,
+		];
 	}
 
 	private function getAnswerModels(Question $question)

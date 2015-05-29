@@ -7,6 +7,8 @@ final class QuestionType extends BaseEnum {
 	const TYPE_RADIOS = 3;
 	const TYPE_CHECKBOXES = 4;
 
+	const DEFAULT_SELECTED = 3;
+
 	public function getAll()
 	{
 		return [

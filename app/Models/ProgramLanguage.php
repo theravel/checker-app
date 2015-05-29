@@ -8,12 +8,6 @@ class ProgramLanguage extends BaseModel {
 
 	public $timestamps = false;
 
-	/*** methods ***/
-	public function isDefaultSelected()
-	{
-		return $this->getId() === self::DEFAULT_SELECTED;
-	}
-
 	/*** scopes ***/
 	public function scopeAllOrdered($query)
 	{

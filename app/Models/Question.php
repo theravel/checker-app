@@ -71,6 +71,11 @@ class Question extends BaseModel {
 		return $this->attributes['parent_question_ids'];
 	}
 
+	public function getProgramLanguageId()
+	{
+		return $this->attributes['p_language_id'];
+	}
+
 	public function getProgramLanguage()
 	{
 		return $this->programLanguage;

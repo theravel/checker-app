@@ -48,7 +48,7 @@
 								@foreach ($programLanguages as $programLanguage)
 									<option value="{{ $programLanguage->getId() }}"
 											data-highlight="{{ $programLanguage->getHighlightAlias() }}"
-											{{ $programLanguage->isDefaultSelected() ? 'selected="selected"' : '' }}>
+											{{ ($programLanguage->getId() == $activeProgramLanguageId) ? 'selected="selected"' : '' }}>
 										{{ $programLanguage->getName() }}
 									</option>
 								@endforeach
@@ -61,6 +61,9 @@
 					<label>Categories</label>
 					<span class="hidden" id="t-categories-placeholder">E.g. OOP, Algorithms, Patterns</span>
 					<ul id="question-categories" name="categories">
+						@foreach ($categories as $category)
+							<li>{{ $category->getName() }}</li>
+						@endforeach
 					</ul>
 				</div>
 

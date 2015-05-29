@@ -41,7 +41,9 @@ class QuestionsController extends BaseController {
 		return view('questions/suggest', [
 			'programLanguages' => ProgramLanguage::allOrdered()->get(),
 			'questionTypes' => Question::getTypes(),
-			'activeQuestionType' => QuestionType::TYPE_RADIOS,
+			'activeQuestionType' => QuestionType::DEFAULT_SELECTED,
+			'activeProgramLanguageId' => ProgramLanguage::DEFAULT_SELECTED,
+			'categories' => [],
 		]);
 	}
 
@@ -56,7 +58,7 @@ class QuestionsController extends BaseController {
 		$repository = new QuestionsRepository();
 		$repository->to($question)
 			->attach('answers', $this->getAnswerModels($question))
-			->attach('categories', $this->getCategoriesIds($question))
+			->attach('categoriesIds', $this->getCategoriesIds($question))
 			->save();
 		Session::flash('suggestSuccess', true);
 		return response()->json(['id' => $question->getId()]);

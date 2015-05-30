@@ -43,6 +43,7 @@ class QuestionsController extends BaseController {
 
 	public function getEdit($id)
 	{
+		// @TODO fix JS copypaste
 		$question = Question::findOrFail($id);
 		return view('questions/edit', $this->getQuestionViewData($question));
 	}
@@ -57,7 +58,7 @@ class QuestionsController extends BaseController {
 		$question->setUserId($this->hasUser() ? $this->getUser()->getId() : null);
 		$repository = new QuestionsRepository();
 		$repository->to($question)
-			->attach('answers', $this->getAnswerModels($question))
+			->attach('answers', $this->getAnswerToSave($question))
 			->attach('categoriesIds', $this->getCategoriesIds($question))
 			->save();
 		Session::flash('suggestSuccess', true);
@@ -83,12 +84,26 @@ class QuestionsController extends BaseController {
 			'activeQuestionType' => $question ? $question->getType() : QuestionType::DEFAULT_SELECTED,
 			'activeProgramLanguageId' => $question ? $question->getProgramLanguageId() : ProgramLanguage::DEFAULT_SELECTED,
 			'categories' => $question ? $question->getCategories() : [],
+			'answers' => $this->getViewAnswers($question),
 			'language' => Translation::LANGUAGE_DEFAULT,
 			'question' => $question,
 		];
 	}
 
-	private function getAnswerModels(Question $question)
+	private function getViewAnswers(Question $question = null)
+	{
+		$emptyForm = [null, null];
+		$result = [
+			QuestionType::TYPE_RADIOS => $emptyForm,
+			QuestionType::TYPE_CHECKBOXES => $emptyForm,
+		];
+		if ($question) {
+			$result[$question->getType()] = $question->getAnswers();
+		}
+		return $result;
+	}
+
+	private function getAnswerToSave(Question $question)
 	{
 		$result = [];
 		if (in_array($question->getType(), QuestionType::getTypesWithoutAnswers())) {

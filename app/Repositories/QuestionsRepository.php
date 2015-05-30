@@ -10,6 +10,7 @@ class QuestionsRepository extends FluentRelationsRepository {
 	{
 		$question = $this->getObject();
 		$answers = $this->getAttached('answers', []);
+		// @TODO improve validation
 		$categoriesIds = $this->getAttached('categoriesIds', []);
 		if (!in_array($question->getType(), QuestionType::getTypesWithoutAnswers())) {
 			$this->validateAnswers($answers);

@@ -22,6 +22,18 @@
 					</p>
 				</div>
 			@endif
+			@if (Session::has('flash.questionEditSuccess'))
+				<div class="alert alert-success">
+					<p>
+						Thank you for contribution!
+						New question version was successfully created, you can see it below.
+					</p>
+					<p>
+						Please note that the old version is still available,
+						it might be withdrawn by a new version after moderation.
+					</p>
+				</div>
+			@endif
 			<div id="markdown-view"
 				 data-lang="{{ $question->getProgramLanguage()->getHighlightAlias() }}"
 				 data-value="{{{ $question->getTranslation($language) }}}">

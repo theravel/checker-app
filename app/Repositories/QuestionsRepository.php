@@ -9,14 +9,16 @@ class QuestionsRepository extends FluentRelationsRepository {
 	public function save()
 	{
 		$question = $this->getObject();
+		$hierarchy = $this->getAttached('hierarchy');
 		$answers = $this->getAttached('answers', []);
 		// @TODO improve validation
 		$categoriesIds = $this->getAttached('categoriesIds', []);
 		if (!in_array($question->getType(), QuestionType::getTypesWithoutAnswers())) {
 			$this->validateAnswers($answers);
 		}
-		$this->saveRelated(function() use ($question, $answers, $categoriesIds) {
+		$this->saveRelated(function() use ($question, $hierarchy, $answers, $categoriesIds) {
 			$question->save();
+			$question->hierarchy()->save($hierarchy);
 			$question->answers()->saveMany($answers);
 			if (!empty($categoriesIds)) {
 				$question->categories()->attach($categoriesIds);

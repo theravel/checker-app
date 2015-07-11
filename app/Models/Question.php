@@ -17,6 +17,11 @@ class Question extends BaseModel {
 		return $this->hasOne('Forestest\Models\ProgramLanguage', 'id', 'p_language_id');
 	}
 
+	public function hierarchy()
+	{
+		return $this->hasOne('Forestest\Models\QuestionHierarchy', 'question_id', 'id');
+	}
+
 	public function answers()
 	{
 		return $this->hasMany('Forestest\Models\Answer', 'question_id', 'id');
@@ -79,6 +84,11 @@ class Question extends BaseModel {
 	public function getProgramLanguage()
 	{
 		return $this->programLanguage;
+	}
+
+	public function getHierarchy()
+	{
+		return $this->hierarchy;
 	}
 
 	public function getCategories()

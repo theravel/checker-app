@@ -23,7 +23,7 @@
 						At least one answer must be flagged as correct
 					</div>
 					<div class="alert alert-danger hidden" id="error-server">
-						Cannot save question because of internal error
+						Cannot save question due to internal error
 					</div>
 				</div>
 				<div class="row">
@@ -58,7 +58,7 @@
 				</div>
 
 				<div class="form-group question-categories">
-					<label>Categories</label>
+					<label>Categories (multiple values can be separated by comma)</label>
 					<span class="hidden" id="t-categories-placeholder">E.g. OOP, Algorithms, Patterns</span>
 					<ul id="question-categories" name="categories">
 						@foreach ($categories as $category)
@@ -115,6 +115,7 @@
 				</div>
 
 				<div id="question-answers-block"
+					 data-save-url="/questions/{{ $question ? 'edit/' . $question->getId() : 'suggest' }}"
 					 class="panel panel-default {{ in_array($activeQuestionType, $typesWithoutAnswers) ? 'hidden' : '' }}">
 					<div class="panel-heading">
 						<span>Answers</span>

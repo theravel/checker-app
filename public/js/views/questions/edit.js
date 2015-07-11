@@ -96,7 +96,7 @@ require([
 				jAnswersBlock.addClass('hidden');
 				break;
 		}
-		resetAnswerType();
+		resetValidationErrors();
 	});
 
 	$('.answers-container').on('change', '.correct-switch', function() {
@@ -181,7 +181,7 @@ require([
 				return hasFlagged;
 			}
 		},
-		resetAnswerType = function() {
+		resetValidationErrors = function() {
 			$('#validation-errors .alert').addClass('hidden');
 		}
 	;
@@ -193,7 +193,16 @@ require([
 	});
 
 	$('#question-suggest').on('submit', function() {
-		var valid = true;
+		var valid = true,
+			pageScroll = function() {
+				$('html, body').animate({scrollTop: 0}, 300);
+			},
+			errorHandler = function() {
+				jErrorMessages.server.removeClass('hidden');
+				pageScroll();
+			};
+		
+		resetValidationErrors();
 		valid &= validationCheck.emptyText();
 		valid &= validationCheck.noAnswers();
 		valid &= validationCheck.emptyAnswer();
@@ -201,21 +210,23 @@ require([
 		if (valid) {
 			var button = $(this).addClass('processing');
 			$.ajax({
-				url: '/questions/suggest',
+				url: jAnswersBlock.data('saveUrl'),
 				type: 'POST',
 				data: $(this).serialize(),
 				success: function(data) {
-					window.location = '/questions/preview/' + data.id;
+					if (data.id) {
+						window.location = '/questions/preview/' + data.id;
+					} else {
+						errorHandler();
+					}
 				},
-				error: function() {
-					jErrorMessages.server.removeClass('hidden');
-				},
+				error: errorHandler,
 				complete: function() {
 					button.removeClass('processing');
 				}
 			});
 		} else {
-			$('html, body').animate({scrollTop: 0}, 300);
+			pageScroll();
 		}
 		return false;
 	});

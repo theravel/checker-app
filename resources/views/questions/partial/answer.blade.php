@@ -2,7 +2,11 @@
 	<span class="input-group-addon answer-correct-toggle
 		  {{ ($answer && $answer->getIsCorrect()) ? 'answer-correct-ok' : 'answer-correct-wrong' }}">
 		<label class="glyphicon glyphicon-remove-circle"></label>
-		<input type="{{ $inputType }}" class="correct-switch" />
+		<input type="{{ $inputType }}" class="correct-switch"
+				@if ($answer && $answer->getIsCorrect())
+					checked="checked"
+				@endif
+			/>
 		<input type="hidden"
 			   class="correct-switch-value"
 				@if ($isTemplate)
@@ -11,7 +15,7 @@
 					name="answersCorrect[{{ $typeId }}][]"
 				@endif
 			   value="{{ $answer ? $answer->getIsCorrect() : 0 }}"
-			   />
+			/>
 	</span>
 	<input type="text" class="form-control answer-text"
 		   value="{{ $answer ? $answer->getTranslation($language) : '' }}"

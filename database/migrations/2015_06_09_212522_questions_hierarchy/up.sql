@@ -1,7 +1,7 @@
 ALTER TABLE questions
 	DROP COLUMN parent_question_ids;
 
-CREATE TABLE questions_hierarchy (
+CREATE TABLE question_hierarchy (
 	id serial NOT NULL, 
 	question_id integer NOT NULL, 
 	parent_id integer, 

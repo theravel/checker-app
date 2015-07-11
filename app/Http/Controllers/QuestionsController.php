@@ -2,13 +2,13 @@
 
 use Illuminate\Http\Request;
 use Input;
-use Session;
 
 use Forestest\Models\Answer;
 use Forestest\Models\Question;
 use Forestest\Models\Category;
 use Forestest\Models\Translation;
 use Forestest\Models\ProgramLanguage;
+use Forestest\Models\QuestionHierarchy;
 use Forestest\Models\Enum\QuestionType;
 use Forestest\Models\Enum\ModerationStatus;
 use Forestest\Repositories\QuestionsRepository;
@@ -50,18 +50,16 @@ class QuestionsController extends BaseController {
 
 	public function postSuggest(Request $request)
 	{
-		$question = new Question();
-		$question->setType($request->get('questionType'));
-		$question->setProgramLanguageId($request->get('programLanguage'));
-		$question->setModerationStatus(ModerationStatus::STATUS_PENDING);
-		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
-		$question->setUserId($this->hasUser() ? $this->getUser()->getId() : null);
-		$repository = new QuestionsRepository();
-		$repository->to($question)
-			->attach('answers', $this->getAnswerToSave($question))
-			->attach('categoriesIds', $this->getCategoriesIds($question))
-			->save();
+		$question = $this->createNewQuestion($request);
 		$this->setFlashMessage('questionSuggestSuccess');
+		return response()->json(['id' => $question->getId()]);
+	}
+
+	public function postEdit($parentId, Request $request)
+	{
+		$parentQuestion = Question::findOrFail($parentId);
+		$question = $this->createNewQuestion($request, $parentQuestion);
+		$this->setFlashMessage('questionEditSuccess');
 		return response()->json(['id' => $question->getId()]);
 	}
 
@@ -73,6 +71,23 @@ class QuestionsController extends BaseController {
 			return $category->getName();
 		}, iterator_to_array($categories));
 		return response()->json($categoryNames);
+	}
+
+	private function createNewQuestion(Request $request, Question $parentQuestion = null)
+	{
+		$question = new Question();
+		$question->setType($request->get('questionType'));
+		$question->setProgramLanguageId($request->get('programLanguage'));
+		$question->setModerationStatus(ModerationStatus::STATUS_PENDING);
+		$question->setTranslation(Translation::LANGUAGE_DEFAULT, $request->get('text'));
+		$question->setUserId($this->hasUser() ? $this->getUser()->getId() : null);
+		$repository = new QuestionsRepository();
+		$repository->to($question)
+			->attach('hierarchy', $this->prepareHierarchy($parentQuestion))
+			->attach('answers', $this->getAnswerToSave($question))
+			->attach('categoriesIds', $this->getCategoriesIds($question))
+			->save();
+		return $question;
 	}
 
 	private function getQuestionViewData(Question $question = null)
@@ -101,6 +116,15 @@ class QuestionsController extends BaseController {
 			$result[$question->getType()] = $question->getAnswers();
 		}
 		return $result;
+	}
+
+	private function prepareHierarchy(Question $parentQuestion = null)
+	{
+		$hierarchy = new QuestionHierarchy;
+		if ($parentQuestion) {
+			$hierarchy->setParentId($parentQuestion->getId());
+		}
+		return $hierarchy;
 	}
 
 	private function getAnswerToSave(Question $question)

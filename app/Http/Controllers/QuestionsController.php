@@ -59,6 +59,9 @@ class QuestionsController extends BaseController {
 	{
 		$parentQuestion = Question::findOrFail($parentId);
 		$question = $this->createNewQuestion($request, $parentQuestion);
+		$parentHierarchy = $parentQuestion->getHierarchy();
+		$parentHierarchy->addChildId($question->getId());
+		$parentHierarchy->save();
 		$this->setFlashMessage('questionEditSuccess');
 		return response()->json(['id' => $question->getId()]);
 	}

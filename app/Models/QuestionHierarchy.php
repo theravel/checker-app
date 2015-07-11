@@ -7,6 +7,18 @@ class QuestionHierarchy extends BaseModel {
 	protected $table = 'question_hierarchy';
 	public $timestamps = false;
 
+	/*** internal properties ***/
+	private $childrenIds = [];
+
+	/*** internal methods ***/
+	private function parseChildrenIds()
+	{
+		$numbers = trim(substr($this->attributes['children_ids'], 1, -1));
+		if (!empty($numbers)) {
+			$this->childrenIds = explode(',', $numbers);
+		}
+	}
+
 	/*** getters ***/
 	public function getId()
 	{
@@ -25,7 +37,10 @@ class QuestionHierarchy extends BaseModel {
 
 	public function getChildrenIds()
 	{
-		return $this->attributes['children_ids'];
+		if (empty($this->childrenIds)) {
+			$this->parseChildrenIds();
+		}
+		return $this->childrenIds;
 	}
 
 	/*** setters ***/
@@ -39,9 +54,18 @@ class QuestionHierarchy extends BaseModel {
 		$this->attributes['parent_id'] = $parentId;
 	}
 
+	public function addChildId($childId)
+	{
+		if (empty($this->childrenIds)) {
+			$this->parseChildrenIds();
+		}
+		$this->childrenIds[] = $childId;
+		$this->setChildrenIds($this->childrenIds);
+	}
+
 	public function setChildrenIds($childrenIds)
 	{
-		$this->attributes['children_ids'] = $childrenIds;
+		$this->attributes['children_ids'] = '{' . implode(',', $childrenIds) . '}';
 	}
 
 }

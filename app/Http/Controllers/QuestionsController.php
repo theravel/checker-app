@@ -61,7 +61,7 @@ class QuestionsController extends BaseController {
 			->attach('answers', $this->getAnswerToSave($question))
 			->attach('categoriesIds', $this->getCategoriesIds($question))
 			->save();
-		Session::flash('suggestSuccess', true);
+		$this->setFlashMessage('questionSuggestSuccess');
 		return response()->json(['id' => $question->getId()]);
 	}
 

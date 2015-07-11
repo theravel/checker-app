@@ -10,11 +10,11 @@
 			</a>
 		</div>
 		<div class="panel-body">
-			@if (Session::has('suggestSuccess'))
+			@if (Session::has('flash.questionSuggestSuccess'))
 				<div class="alert alert-success">
 					<p>
 						Thank you for contribution!
-						The question was successfully created, you can see it below.
+						Question was successfully created, you can see it below.
 					</p>
 					<p>
 						Please note that every change is reviewed by moderators,

@@ -2,7 +2,6 @@
 
 use Log;
 use OAuth;
-use Session;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
@@ -53,9 +52,9 @@ class AuthController extends BaseController {
 	{
 		try {
 			$this->performOauthLogin($provider);
-			Session::flash('oauthSuccess', true);
+			$this->setFlashMessage('oauthSuccess');
 		} catch (\Exception $e) {
-			Session::flash('oauthError', true);
+			$this->setFlashMessage('oauthError');
 			Log::error('Cannot perform OAuth login', ['ex' => $e]);
 		}
 		return redirect('/');

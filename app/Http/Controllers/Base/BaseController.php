@@ -1,6 +1,7 @@
 <?php namespace Forestest\Http\Controllers\Base;
 
 use Auth;
+use Session;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Bus\DispatchesCommands;
@@ -17,14 +18,19 @@ abstract class BaseController extends Controller {
 		$this->setStaticAssets();
 	}
 
-	public function getUser()
+	protected function getUser()
 	{
 		return Auth::user();
 	}
 
-	public function hasUser()
+	protected function hasUser()
 	{
 		return null !== $this->getUser();
+	}
+
+	protected function setFlashMessage($flashMessageKey)
+	{
+		Session::flash("flash.$flashMessageKey", true);
 	}
 
 	private function setStaticAssets()

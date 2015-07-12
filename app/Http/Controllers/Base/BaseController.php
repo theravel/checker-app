@@ -33,6 +33,11 @@ abstract class BaseController extends Controller {
 		Session::flash("flash.$flashMessageKey", true);
 	}
 
+	protected function setJsPath($path)
+	{
+		view()->share('pageJs', $path);
+	}
+
 	private function setStaticAssets()
 	{
 		$uri = static::getRouter()->getCurrentRoute()->getUri();
@@ -44,7 +49,7 @@ abstract class BaseController extends Controller {
 			$action = 'index';
 		}
 		view()->share('pageCss', $this->pageCss);
-		view()->share('pageJs', "$controller/$action");
+		$this->setJsPath("$controller/$action");
 	}
 
 }

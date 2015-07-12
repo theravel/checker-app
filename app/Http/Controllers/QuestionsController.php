@@ -38,12 +38,12 @@ class QuestionsController extends BaseController {
 
 	public function getSuggest()
 	{
+		$this->setJsPath('questions/edit');
 		return view('questions/edit', $this->getQuestionViewData());
 	}
 
 	public function getEdit($id)
 	{
-		// @TODO fix JS copypaste
 		$question = Question::findOrFail($id);
 		return view('questions/edit', $this->getQuestionViewData($question));
 	}

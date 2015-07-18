@@ -17,6 +17,7 @@ Route::get('home', 'HomeController@getHome');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'questions' => 'QuestionsController',
+	'survey' => 'SurveyController',
 	// #19 temporary disable
 	// 'password' => 'Auth\PasswordController',
 ]);
